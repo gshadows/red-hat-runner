@@ -9,11 +9,10 @@ var menu
 
 func _input(event):
 	# ESC - open menu.
-	if event.is_action_pressed("ui_cancel"):
+	if not menu and event.is_action_pressed("ui_cancel"):
 		get_tree().set_input_as_handled()
-		if not menu:
-			open_menu()
-			return
+		open_menu()
+		return
 
 
 func open_menu():
@@ -37,4 +36,5 @@ func close_menu():
 
 
 func quit_game():
+	get_tree().paused = false
 	emit_signal("quit")
