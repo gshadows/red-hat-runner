@@ -1,10 +1,7 @@
 extends Node
 
-const MENU_SCENE = "res://Menu.tscn"
-const GAME_SCENE = "res://Game.tscn"
-
-onready var Menu = preload(MENU_SCENE)
-onready var Game = preload(GAME_SCENE)
+onready var Menu = preload("res://Menu.tscn")
+onready var Game = preload("res://Game.tscn")
 
 var cur_scene
 

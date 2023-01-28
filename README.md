@@ -1,5 +1,5 @@
-# Halloween Trouble
-PGD GameDev JAM #11: Red Hat Runner
+# Red Hat Runner
+PGD GameDev JAM #11: Fairy Tale - Just Don't Move!
 
 Download link: https://gshadow.itch.io/red-hat-runner
 
