@@ -36,7 +36,7 @@ func generate(var parent):
 	# Bushes
 	generate_obj(parent, BushScene, BUSHES_COUNT, +BUSH_MIN_POS, +BUSH_MAX_POS)
 	generate_obj(parent, BushScene, BUSHES_COUNT, -BUSH_MIN_POS, -BUSH_MAX_POS)
-	
+
 
 func generate_obj(var parent, var scene, var count:int, var min_pos:float, var max_pos:float):
 	var dz := GROUND_LEN / count

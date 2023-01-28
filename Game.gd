@@ -1,5 +1,7 @@
 extends Spatial
 
+const USE_THREAD := false
+
 signal quit
 
 export var RUN_SPEED := 5.0
@@ -7,17 +9,25 @@ export var RUN_SPEED := 5.0
 onready var MenuUI = preload("res://ui/MenuUI.tscn")
 onready var mapgen = $MapGenerator
 
-var menu
 onready var chunk1 : Spatial = $chunk1
 onready var chunk2 : Spatial = $chunk2
 onready var chunk3 : Spatial = $chunk3
+
+var menu
+
+var gen_thread := Thread.new()
+var gen_thread_mutex := Mutex.new()
+var gen_thread_semaphore := Semaphore.new()
+var gen_thread_quit := false
 
 
 func _ready():
 	regenerate_map(chunk1)
 	regenerate_map(chunk2)
 	regenerate_map(chunk3)
-	pass
+	if USE_THREAD && not gen_thread.start(self, "_gen_thread_func"):
+		printerr("Map generation thread start failed!")
+		emit_signal("quit")
 
 
 func _process(delta:float):
@@ -27,7 +37,7 @@ func _process(delta:float):
 	chunk3.translation.z += RUN_SPEED * delta
 	if chunk3.translation.z >= MapGenerator.GROUND_LEN:
 		swicth_chunks()
-	
+
 
 func swicth_chunks():
 	var tmp = chunk3
@@ -35,18 +45,38 @@ func swicth_chunks():
 	chunk2 = chunk1
 	chunk1 = tmp
 	chunk1.translation.z -= MapGenerator.GROUND_LEN * 3
-	regenerate_map(chunk1)
+	var map = chunk1.get_node_or_null("Map")
+	if map:
+		chunk1.remove_child(map)
+		map.queue_free()
+	if USE_THREAD:
+		var __ = gen_thread_semaphore.post()
+	else:
+		regenerate_map(chunk1)
+
+
+func _exit_tree():
+	if USE_THREAD:
+		gen_thread_mutex.lock()
+		gen_thread_quit = true
+		gen_thread_mutex.unlock()
+		var __ = gen_thread_semaphore.post()
+		gen_thread.wait_to_finish()
+
+
+func _gen_thread_func(_userdata):
+	while true:
+		var __ = gen_thread_semaphore.wait()
+		if gen_thread_quit:
+			break
+		regenerate_map(chunk1)
 
 
 func regenerate_map(var parent:Node):
-	var map = parent.get_node_or_null("Map")
-	if map:
-		map.queue_free()
-		parent.remove_child(map)
-	map = Spatial.new()
+	var map = Spatial.new()
 	map.name = "Map"
 	mapgen.generate(map)
-	parent.add_child(map)
+	parent.call_deferred("add_child", map)
 
 
 func _input(event):

@@ -9,6 +9,7 @@ export.cfg
 # Output directory.
 _export
 _releases
+1
 
 # Imported translations (automatically generated from CSV files)
 *.translation
