@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Game.gd" type="Script" id=1]
 [ext_resource path="res://objects/ground/ground.tscn" type="PackedScene" id=2]
-[ext_resource path="res://configs/default_env.tres" type="Environment" id=3]
+[ext_resource path="res://configs/game_env.tres" type="Environment" id=3]
 [ext_resource path="res://objects/MapGenerator.tscn" type="PackedScene" id=4]
+[ext_resource path="res://objects/stone/Stone01.tscn" type="PackedScene" id=5]
 
 [node name="Game" type="Spatial"]
 script = ExtResource( 1 )
@@ -31,4 +32,8 @@ skeleton = NodePath("../..")
 [node name="chunk3" type="Spatial" parent="."]
 
 [node name="Ground" parent="chunk3" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 skeleton = NodePath("../..")
+
+[node name="Stone01" parent="." instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 1.24753 )

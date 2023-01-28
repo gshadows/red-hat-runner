@@ -13,9 +13,15 @@ _global_script_classes=[ {
 "class": "MapGenerator",
 "language": "GDScript",
 "path": "res://objects/MapGenerator.gd"
+}, {
+"base": "Node",
+"class": "ObjGenerator",
+"language": "GDScript",
+"path": "res://objects/ObjGenerator.gd"
 } ]
 _global_script_class_icons={
-"MapGenerator": ""
+"MapGenerator": "",
+"ObjGenerator": ""
 }
 
 [application]
@@ -79,4 +85,5 @@ common/enable_pause_aware_picking=true
 
 [rendering]
 
+environment/default_clear_color=Color( 0.301961, 0.301961, 0.301961, 1 )
 environment/default_environment="res://configs/default_env.tres"
