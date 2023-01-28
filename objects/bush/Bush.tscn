@@ -3,7 +3,7 @@
 [sub_resource type="SpatialMaterial" id=1]
 albedo_color = Color( 0.180392, 0.47451, 0, 1 )
 
-[node name="Tree" type="Spatial"]
+[node name="Bush" type="Spatial"]
 
 [node name="CSG-Bush" type="CSGSphere" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.304641, 0 )

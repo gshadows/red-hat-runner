@@ -9,18 +9,26 @@
 script = ExtResource( 1 )
 
 [node name="Camera" type="Camera" parent="."]
-transform = Transform( 1, 0, 0, 0, 0.723558, 0.690264, 0, -0.690264, 0.723558, 0, 3.20026, 3.68959 )
+transform = Transform( 1, 0, 0, 0, 0.723558, 0.690264, 0, -0.690264, 0.723558, 0, 3.12529, 5.33152 )
 environment = ExtResource( 3 )
 current = true
 size = 0.1
 
-[node name="Camera2" type="Camera" parent="."]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 10, -2 )
-visible = false
-environment = ExtResource( 3 )
-size = 0.1
-
-[node name="Ground" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.5 )
-
 [node name="MapGenerator" parent="." instance=ExtResource( 4 )]
+
+[node name="chunk1" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20 )
+
+[node name="Ground" parent="chunk1" instance=ExtResource( 2 )]
+skeleton = NodePath("../..")
+
+[node name="chunk2" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10 )
+
+[node name="Ground" parent="chunk2" instance=ExtResource( 2 )]
+skeleton = NodePath("../..")
+
+[node name="chunk3" type="Spatial" parent="."]
+
+[node name="Ground" parent="chunk3" instance=ExtResource( 2 )]
+skeleton = NodePath("../..")

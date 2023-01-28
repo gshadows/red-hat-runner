@@ -2,14 +2,51 @@ extends Spatial
 
 signal quit
 
+export var RUN_SPEED := 5.0
+
 onready var MenuUI = preload("res://ui/MenuUI.tscn")
 onready var mapgen = $MapGenerator
 
 var menu
+onready var chunk1 : Spatial = $chunk1
+onready var chunk2 : Spatial = $chunk2
+onready var chunk3 : Spatial = $chunk3
 
 
 func _ready():
-	mapgen.generate($Ground)
+	regenerate_map(chunk1)
+	regenerate_map(chunk2)
+	regenerate_map(chunk3)
+	pass
+
+
+func _process(delta:float):
+	#if is_player_runs:
+	chunk1.translation.z += RUN_SPEED * delta
+	chunk2.translation.z += RUN_SPEED * delta
+	chunk3.translation.z += RUN_SPEED * delta
+	if chunk3.translation.z >= MapGenerator.GROUND_LEN:
+		swicth_chunks()
+	
+
+func swicth_chunks():
+	var tmp = chunk3
+	chunk3 = chunk2
+	chunk2 = chunk1
+	chunk1 = tmp
+	chunk1.translation.z -= MapGenerator.GROUND_LEN * 3
+	regenerate_map(chunk1)
+
+
+func regenerate_map(var parent:Node):
+	var map = parent.get_node_or_null("Map")
+	if map:
+		map.queue_free()
+		parent.remove_child(map)
+	map = Spatial.new()
+	map.name = "Map"
+	mapgen.generate(map)
+	parent.add_child(map)
 
 
 func _input(event):
