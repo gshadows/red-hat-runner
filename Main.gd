@@ -16,11 +16,17 @@ func _ready():
 	open_menu()
 
 
+func quit_game():
+	get_tree().quit(0)
+
+
 func open_menu():
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	unload()
 	cur_scene = Menu.instance()
 	add_child(cur_scene)
+	cur_scene.connect("quit", self, "quit_game")
+	cur_scene.connect("start", self, "start_game")
 
 
 func start_game():
@@ -28,6 +34,7 @@ func start_game():
 	cur_scene = Game.instance()
 	add_child(cur_scene)
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	cur_scene.connect("quit", self, "open_menu")
 
 
 func unload():
@@ -35,3 +42,12 @@ func unload():
 		remove_child(cur_scene)
 		cur_scene.queue_free()
 		cur_scene = null
+
+
+func _input(event):
+	# ESC - open menu.
+	if event.is_action_pressed("fullscreen"):
+		get_tree().set_input_as_handled()
+		Settings.full_screen = not Settings.full_screen
+		OS.window_fullscreen = Settings.full_screen
+		Settings.save()
