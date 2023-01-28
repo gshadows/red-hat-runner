@@ -1,0 +1,35 @@
+# Godot 4+ specific ignores
+.godot/
+
+# Godot-specific ignores
+.import/
+export.cfg
+#export_presets.cfg
+
+# Output directory.
+_export
+_releases
+
+# Imported translations (automatically generated from CSV files)
+*.translation
+
+# Mono-specific ignores
+.mono/
+data_*/
+mono_crash.*.json
+
+# System/tool-specific ignores
+.directory
+*~
+
+# Blender versioning
+*.blend[0-9]*
+
+# Common trash files.
+*.bak
+*.tmp
+*.log
+*.~*
+
+# Game settings when saved to current folder.
+config.ini
