@@ -1,0 +1,15 @@
+[gd_scene format=2]
+
+[node name="Tree" type="Spatial"]
+
+[node name="CSG-Tree" type="CSGCylinder" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0 )
+radius = 0.1
+height = 0.5
+
+[node name="CSGCylinder" type="CSGCylinder" parent="CSG-Tree"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0 )
+radius = 0.5
+height = 2.0
+sides = 12
+cone = true

@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=2]
+
+[sub_resource type="PlaneMesh" id=1]
+size = Vector2( 30, 10 )
+
+[sub_resource type="SpatialMaterial" id=3]
+albedo_color = Color( 0.0392157, 0.709804, 0, 1 )
+
+[sub_resource type="PlaneMesh" id=2]
+size = Vector2( 6, 10 )
+
+[sub_resource type="SpatialMaterial" id=4]
+albedo_color = Color( 0.686275, 0.490196, 0.207843, 1 )
+
+[node name="Ground" type="MeshInstance"]
+mesh = SubResource( 1 )
+material/0 = SubResource( 3 )
+
+[node name="Road" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0 )
+mesh = SubResource( 2 )
+material/0 = SubResource( 4 )

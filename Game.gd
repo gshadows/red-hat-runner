@@ -3,8 +3,13 @@ extends Spatial
 signal quit
 
 onready var MenuUI = preload("res://ui/MenuUI.tscn")
+onready var mapgen = $MapGenerator
 
 var menu
+
+
+func _ready():
+	mapgen.generate($Ground)
 
 
 func _input(event):
