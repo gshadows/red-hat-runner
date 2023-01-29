@@ -1,6 +1,6 @@
 extends Spatial
 
-const USE_THREAD := false
+const USE_THREAD := true
 
 signal quit
 
@@ -8,6 +8,7 @@ export var RUN_SPEED := 5.0
 
 onready var MenuUI = preload("res://ui/MenuUI.tscn")
 onready var mapgen = $MapGenerator
+onready var objgen = $ObjGenerator
 
 onready var chunk1 : Spatial = $chunk1
 onready var chunk2 : Spatial = $chunk2
@@ -25,7 +26,7 @@ func _ready():
 	regenerate_map(chunk1)
 	regenerate_map(chunk2)
 	regenerate_map(chunk3)
-	if USE_THREAD && not gen_thread.start(self, "_gen_thread_func"):
+	if USE_THREAD && not gen_thread.start(self, "_gen_thread_func", null, Thread.PRIORITY_LOW):
 		printerr("Map generation thread start failed!")
 		emit_signal("quit")
 
@@ -45,10 +46,7 @@ func swicth_chunks():
 	chunk2 = chunk1
 	chunk1 = tmp
 	chunk1.translation.z -= MapGenerator.GROUND_LEN * 3
-	var map = chunk1.get_node_or_null("Map")
-	if map:
-		chunk1.remove_child(map)
-		map.queue_free()
+	clear_chunk1()
 	if USE_THREAD:
 		var __ = gen_thread_semaphore.post()
 	else:
@@ -77,6 +75,21 @@ func regenerate_map(var parent:Node):
 	map.name = "Map"
 	mapgen.generate(map)
 	parent.call_deferred("add_child", map)
+	var obj = Spatial.new()
+	obj.name = "Obj"
+	objgen.generate(obj)
+	parent.call_deferred("add_child", obj)
+
+
+func clear_chunk1():
+	var map = chunk1.get_node_or_null("Map")
+	if map:
+		chunk1.remove_child(map)
+		map.queue_free()
+	var obj = chunk1.get_node_or_null("Obj")
+	if obj:
+		chunk1.remove_child(obj)
+		obj.queue_free()
 
 
 func _input(event):

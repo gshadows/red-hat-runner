@@ -1,7 +1,6 @@
 [gd_scene load_steps=2 format=2]
 
-[sub_resource type="SpatialMaterial" id=1]
-albedo_color = Color( 0.180392, 0.47451, 0, 1 )
+[ext_resource path="res://objects/bush/bush.tres" type="Material" id=1]
 
 [node name="Bush" type="Spatial"]
 
@@ -9,4 +8,4 @@ albedo_color = Color( 0.180392, 0.47451, 0, 1 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.304641, 0 )
 radius = 0.5
 rings = 4
-material = SubResource( 1 )
+material = ExtResource( 1 )

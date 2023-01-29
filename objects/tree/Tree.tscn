@@ -1,15 +1,20 @@
-[gd_scene format=2]
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://objects/tree/tree.tres" type="Material" id=1]
+[ext_resource path="res://objects/tree/trunk.tres" type="Material" id=2]
 
 [node name="Tree" type="Spatial"]
 
-[node name="CSG-Tree" type="CSGCylinder" parent="."]
+[node name="CSG-Trunk" type="CSGCylinder" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0 )
 radius = 0.1
 height = 0.5
+material = ExtResource( 2 )
 
-[node name="CSGCylinder" type="CSGCylinder" parent="CSG-Tree"]
+[node name="CSG-Leaves" type="CSGCylinder" parent="CSG-Trunk"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0 )
 radius = 0.5
 height = 2.0
 sides = 12
 cone = true
+material = ExtResource( 1 )

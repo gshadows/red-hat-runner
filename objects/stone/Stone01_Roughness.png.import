@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/Sone01_Normal.png-8e74671425b5b0d90d0ed83db8aa50ca.s3tc.stex"
-path.etc2="res://.import/Sone01_Normal.png-8e74671425b5b0d90d0ed83db8aa50ca.etc2.stex"
+path.s3tc="res://.import/Stone01_Roughness.png-f3a3166a0d0844dccf887b96c57438df.s3tc.stex"
+path.etc2="res://.import/Stone01_Roughness.png-f3a3166a0d0844dccf887b96c57438df.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://objects/stone/Texture/Sone01_Normal.png"
-dest_files=[ "res://.import/Sone01_Normal.png-8e74671425b5b0d90d0ed83db8aa50ca.s3tc.stex", "res://.import/Sone01_Normal.png-8e74671425b5b0d90d0ed83db8aa50ca.etc2.stex" ]
+source_file="res://objects/stone/Stone01_Roughness.png"
+dest_files=[ "res://.import/Stone01_Roughness.png-f3a3166a0d0844dccf887b96c57438df.s3tc.stex", "res://.import/Stone01_Roughness.png-f3a3166a0d0844dccf887b96c57438df.etc2.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/mode=2
 compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
-compress/normal_map=1
+compress/normal_map=2
 flags/repeat=true
 flags/filter=true
 flags/mipmaps=true

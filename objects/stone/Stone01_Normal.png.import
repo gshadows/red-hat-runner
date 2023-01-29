@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/Stone01_BaseColor.png-aea11e447c57f52291a3036ae2ca24de.s3tc.stex"
-path.etc2="res://.import/Stone01_BaseColor.png-aea11e447c57f52291a3036ae2ca24de.etc2.stex"
+path.s3tc="res://.import/Stone01_Normal.png-d731134b8a20b2eb22804f8719e5037e.s3tc.stex"
+path.etc2="res://.import/Stone01_Normal.png-d731134b8a20b2eb22804f8719e5037e.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,21 +11,21 @@ metadata={
 
 [deps]
 
-source_file="res://objects/stone/Texture/Stone01_BaseColor.png"
-dest_files=[ "res://.import/Stone01_BaseColor.png-aea11e447c57f52291a3036ae2ca24de.s3tc.stex", "res://.import/Stone01_BaseColor.png-aea11e447c57f52291a3036ae2ca24de.etc2.stex" ]
+source_file="res://objects/stone/Stone01_Normal.png"
+dest_files=[ "res://.import/Stone01_Normal.png-d731134b8a20b2eb22804f8719e5037e.s3tc.stex", "res://.import/Stone01_Normal.png-d731134b8a20b2eb22804f8719e5037e.etc2.stex" ]
 
 [params]
 
 compress/mode=2
 compress/lossy_quality=0.7
-compress/hdr_mode=0
+compress/hdr_mode=1
 compress/bptc_ldr=0
-compress/normal_map=0
+compress/normal_map=1
 flags/repeat=true
 flags/filter=true
 flags/mipmaps=true
 flags/anisotropic=false
-flags/srgb=1
+flags/srgb=2
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false

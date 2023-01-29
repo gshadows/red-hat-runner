@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/Stone01_Roughness.1001.png-dafd99992d8766c3afc8f8fed4b819b4.s3tc.stex"
-path.etc2="res://.import/Stone01_Roughness.1001.png-dafd99992d8766c3afc8f8fed4b819b4.etc2.stex"
+path.s3tc="res://.import/Stone01_BaseColor.png-350e9433fbfd3c7b23a073f976e6cb7a.s3tc.stex"
+path.etc2="res://.import/Stone01_BaseColor.png-350e9433fbfd3c7b23a073f976e6cb7a.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://objects/stone/Texture/Stone01_Roughness.1001.png"
-dest_files=[ "res://.import/Stone01_Roughness.1001.png-dafd99992d8766c3afc8f8fed4b819b4.s3tc.stex", "res://.import/Stone01_Roughness.1001.png-dafd99992d8766c3afc8f8fed4b819b4.etc2.stex" ]
+source_file="res://objects/stone/Stone01_BaseColor.png"
+dest_files=[ "res://.import/Stone01_BaseColor.png-350e9433fbfd3c7b23a073f976e6cb7a.s3tc.stex", "res://.import/Stone01_BaseColor.png-350e9433fbfd3c7b23a073f976e6cb7a.etc2.stex" ]
 
 [params]
 
@@ -20,12 +20,12 @@ compress/mode=2
 compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
-compress/normal_map=0
+compress/normal_map=2
 flags/repeat=true
 flags/filter=true
 flags/mipmaps=true
 flags/anisotropic=false
-flags/srgb=2
+flags/srgb=1
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false

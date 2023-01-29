@@ -1,0 +1,16 @@
+[gd_resource type="SpatialMaterial" load_steps=3 format=2]
+
+[sub_resource type="OpenSimplexNoise" id=1]
+
+[sub_resource type="NoiseTexture" id=2]
+seamless = true
+as_normalmap = true
+noise = SubResource( 1 )
+
+[resource]
+albedo_color = Color( 0, 0.105882, 0.47451, 1 )
+metallic = 0.28
+roughness = 0.17
+normal_enabled = true
+normal_scale = 16.0
+normal_texture = SubResource( 2 )
