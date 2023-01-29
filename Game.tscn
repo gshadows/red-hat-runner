@@ -60,8 +60,8 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 1.24753 )
 
 [node name="River" parent="." instance=ExtResource( 6 )]
 
-[node name="Log" parent="." instance=ExtResource( 7 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.63288, 0, 1.32806 )
-
 [node name="Sun" type="DirectionalLight" parent="."]
 transform = Transform( 0.304282, 0.522739, -0.796339, 0, 0.83598, 0.54876, 0.952582, -0.166978, 0.254374, 0, 8.25052, 10.2324 )
+
+[node name="Log" parent="." instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.383, 0, 1.32 )
