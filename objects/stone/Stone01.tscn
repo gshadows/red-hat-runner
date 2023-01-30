@@ -6,9 +6,5 @@
 [node name="Stone01" instance=ExtResource( 1 )]
 
 [node name="stone01_low" parent="RootNode" index="0"]
+transform = Transform( -153.209, -128.557, 2.45204e-06, 125.748, -149.861, 41.5823, -26.7286, 31.8539, 195.63, -0.15, -0.02, 0 )
 material/0 = ExtResource( 2 )
-
-[node name="CSGSphere" type="CSGSphere" parent="RootNode" index="1"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.886493, 0, 0 )
-radius = 0.629103
-material = ExtResource( 2 )

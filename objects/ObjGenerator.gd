@@ -16,8 +16,8 @@ var start_seed: int = 0
 var rng = RandomNumberGenerator.new()
 
 # Generation options.
-var FILLED_BLOCK_LENGTH := 10
-var EMPTY_BLOCK_LENGTH := 10
+var FILLED_BLOCK_LENGTH := 5
+var EMPTY_BLOCK_LENGTH := 5
 var EMPTY_LINE_PROBABILITY := 75
 var RIVER_PROBABILITY := 25
 var LOG_PROBABILITY := 50
@@ -44,15 +44,17 @@ func generate(var parent: Spatial):
 		if is_filling:
 			line = gen_line_obstacles(parent, i)
 			lines_filled += 1
+			print("Lines filled: ", lines_filled)
 			if lines_filled > FILLED_BLOCK_LENGTH:
 				lines_filled = 0
 				is_filling = false
 		else:
 			line = 0
 			lines_filled += 1
+			print("Lines skipped: ", lines_filled)
 			if lines_filled > EMPTY_BLOCK_LENGTH:
 				lines_filled = 0
-				is_filling = false
+				is_filling = true
 		# Flowers
 		gen_line_flowers(parent, i, line)
 		# Finish line.
@@ -131,14 +133,3 @@ func push_line(var line:int):
 	line1 = line2
 	line2 = line
 
-func generate_obj(var parent, var scene, var count:int, var min_pos:float, var max_pos:float):
-	var dz := GROUND_LEN / count
-	var z := (GROUND_LEN - dz) / 2
-	var zlim := -z
-	for i in count:
-		var pos := Vector3(rng.randf_range(min_pos, max_pos), 0, z)
-		var obj = scene.instance()
-		obj.translation = pos
-		parent.add_child(obj)
-		z -= dz
-		if z < zlim: break

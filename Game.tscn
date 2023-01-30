@@ -1,12 +1,9 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Game.gd" type="Script" id=1]
 [ext_resource path="res://objects/ground/ground.tscn" type="PackedScene" id=2]
 [ext_resource path="res://configs/default_env.tres" type="Environment" id=3]
 [ext_resource path="res://objects/MapGenerator.tscn" type="PackedScene" id=4]
-[ext_resource path="res://objects/stone/Stone01.tscn" type="PackedScene" id=5]
-[ext_resource path="res://objects/river/River.tscn" type="PackedScene" id=6]
-[ext_resource path="res://objects/log/Log.tscn" type="PackedScene" id=7]
 [ext_resource path="res://objects/ObjGenerator.gd" type="Script" id=8]
 
 [node name="Game" type="Spatial"]
@@ -55,13 +52,5 @@ __meta__ = {
 "_edit_group_": true
 }
 
-[node name="Stone01" parent="." instance=ExtResource( 5 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 1.24753 )
-
-[node name="River" parent="." instance=ExtResource( 6 )]
-
 [node name="Sun" type="DirectionalLight" parent="."]
 transform = Transform( 0.304282, 0.522739, -0.796339, 0, 0.83598, 0.54876, 0.952582, -0.166978, 0.254374, 0, 8.25052, 10.2324 )
-
-[node name="Log" parent="." instance=ExtResource( 7 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.383, 0, 1.32 )
