@@ -16,12 +16,12 @@ var start_seed: int = 0
 var rng = RandomNumberGenerator.new()
 
 # Generation options.
-var FILLED_BLOCK_LENGTH := 5
+var FILLED_BLOCK_LENGTH := 10
 var EMPTY_BLOCK_LENGTH := 5
 var EMPTY_LINE_PROBABILITY := 75
 var RIVER_PROBABILITY := 25
-var LOG_PROBABILITY := 50
-var STONE_PROBABILITY := 50
+var LOG_PROBABILITY := 75
+var STONE_PROBABILITY := 75
 
 # Bit masks for line usage: line1 is nearest to game start.
 var line1 := 0

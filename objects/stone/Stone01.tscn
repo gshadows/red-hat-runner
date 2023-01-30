@@ -6,5 +6,5 @@
 [node name="Stone01" instance=ExtResource( 1 )]
 
 [node name="stone01_low" parent="RootNode" index="0"]
-transform = Transform( -153.209, -128.557, 2.45204e-06, 125.748, -149.861, 41.5823, -26.7286, 31.8539, 195.63, -0.15, -0.02, 0 )
+transform = Transform( -75.847, -105.777, -151.85, 125.748, -149.861, 41.5823, -135.774, -79.7044, 123.339, -0.154596, -0.0337877, -0.147068 )
 material/0 = ExtResource( 2 )

@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Game.gd" type="Script" id=1]
 [ext_resource path="res://objects/ground/ground.tscn" type="PackedScene" id=2]
-[ext_resource path="res://configs/default_env.tres" type="Environment" id=3]
+[ext_resource path="res://configs/game_env.tres" type="Environment" id=3]
 [ext_resource path="res://objects/MapGenerator.tscn" type="PackedScene" id=4]
 [ext_resource path="res://objects/ObjGenerator.gd" type="Script" id=8]
 
