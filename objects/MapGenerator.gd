@@ -3,13 +3,13 @@ extends Node
 
 const GROUND_LEN := 10.0
 
-export var TREE_MIN_POS := 4.0
-export var TREE_MAX_POS := 6.5
-export var TREES_COUNT := 30
+export var TREE_MIN_POS := 5.0
+export var TREE_MAX_POS := 9.0
+export var TREES_COUNT := 20
 
-export var BUSH_MIN_POS := 3.0
-export var BUSH_MAX_POS := 4.0
-export var BUSHES_COUNT := 8
+export var BUSH_MIN_POS := 3.5
+export var BUSH_MAX_POS := 4.5
+export var BUSHES_COUNT := 6
 
 export var Z_DEVIATION := 0.1
 

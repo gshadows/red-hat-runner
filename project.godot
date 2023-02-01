@@ -27,6 +27,11 @@ _global_script_class_icons={
 [application]
 
 config/name="Red Hat Runner"
+config/description="PGD GameDev JAM #11: Fairy Tale - Just Don't Move!
+
+Authors:
+G-Shadow - Programming, 2D sprites.
+anabuc (Discord: anabuc#9855) - 3D modelling, texturing."
 run/main_scene="res://Main.tscn"
 config/icon="res://sprites/icon.png"
 
