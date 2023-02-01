@@ -1,13 +1,25 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://objects/river/river.tres" type="Material" id=1]
+[ext_resource path="res://objects/SimpleArea.gd" type="Script" id=2]
 
 [sub_resource type="PlaneMesh" id=1]
 size = Vector2( 30, 1 )
 
-[node name="River" type="Spatial"]
+[sub_resource type="BoxShape" id=2]
+extents = Vector3( 6, 0.25, 0.5 )
+
+[node name="River" type="Area"]
+collision_layer = 2
+monitoring = false
+script = ExtResource( 2 )
+area_type = 1
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0 )
 mesh = SubResource( 1 )
 material/0 = ExtResource( 1 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.480897, 0 )
+shape = SubResource( 2 )

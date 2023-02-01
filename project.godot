@@ -80,6 +80,11 @@ fullscreen={
  ]
 }
 
+[layer_names]
+
+3d_physics/layer_1="map"
+3d_physics/layer_2="obstacles"
+
 [locale]
 
 translations=PoolStringArray( "res://configs/translations.en.translation", "res://configs/translations.ru.translation" )

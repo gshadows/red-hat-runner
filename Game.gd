@@ -1,6 +1,6 @@
 extends Spatial
 
-const USE_THREAD := true
+const USE_THREAD := false
 
 signal quit
 
