@@ -44,14 +44,14 @@ func generate(var parent: Spatial):
 		if is_filling:
 			line = gen_line_obstacles(parent, i)
 			lines_filled += 1
-			print("Lines filled: ", lines_filled)
+			#print("Lines filled: ", lines_filled)
 			if lines_filled > FILLED_BLOCK_LENGTH:
 				lines_filled = 0
 				is_filling = false
 		else:
 			line = 0
 			lines_filled += 1
-			print("Lines skipped: ", lines_filled)
+			#print("Lines skipped: ", lines_filled)
 			if lines_filled > EMPTY_BLOCK_LENGTH:
 				lines_filled = 0
 				is_filling = true

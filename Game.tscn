@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Game.gd" type="Script" id=1]
 [ext_resource path="res://objects/ground/ground.tscn" type="PackedScene" id=2]
 [ext_resource path="res://configs/game_env.tres" type="Environment" id=3]
 [ext_resource path="res://objects/MapGenerator.tscn" type="PackedScene" id=4]
 [ext_resource path="res://characters/redhat/RedHat.tscn" type="PackedScene" id=5]
+[ext_resource path="res://ui/GameUI.tscn" type="PackedScene" id=6]
 [ext_resource path="res://objects/ObjGenerator.gd" type="Script" id=8]
 
 [node name="Game" type="Spatial"]
@@ -58,3 +59,10 @@ transform = Transform( 0.304282, 0.522739, -0.796339, 0, 0.83598, 0.54876, 0.952
 
 [node name="RedHat" parent="." instance=ExtResource( 5 )]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 3.86087 )
+collision_layer = 3
+collision_mask = 0
+
+[node name="GameUI" parent="." instance=ExtResource( 6 )]
+
+[connection signal="loose" from="RedHat" to="." method="_on_RedHat_loose"]
+[connection signal="win" from="RedHat" to="." method="_on_RedHat_win"]

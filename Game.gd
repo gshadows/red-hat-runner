@@ -4,8 +4,6 @@ const USE_THREAD := false
 
 signal quit
 
-export var RUN_SPEED := 5.0
-
 onready var MenuUI = preload("res://ui/MenuUI.tscn")
 onready var mapgen = $MapGenerator
 onready var objgen = $ObjGenerator
@@ -24,6 +22,9 @@ var gen_thread_quit := false
 
 
 func _ready():
+	var __
+	__ = redhat.connect("lives_changed", $GameUI, "on_lives_changed")
+	__ = redhat.connect("flowers_changed", $GameUI, "on_flowes_changed")
 	regenerate_map(chunk1)
 	regenerate_map(chunk2)
 	regenerate_map(chunk3)
@@ -34,10 +35,11 @@ func _ready():
 
 
 func _process(delta:float):
-	if redhat.is_moving:
-		chunk1.translation.z += RUN_SPEED * delta
-		chunk2.translation.z += RUN_SPEED * delta
-		chunk3.translation.z += RUN_SPEED * delta
+	var speed : float = redhat.current_speed
+	if speed > 0:
+		chunk1.translation.z += speed * delta
+		chunk2.translation.z += speed * delta
+		chunk3.translation.z += speed * delta
 		if chunk3.translation.z >= MapGenerator.GROUND_LEN:
 			swicth_chunks()
 
@@ -130,3 +132,11 @@ func close_menu():
 func quit_game():
 	get_tree().paused = false
 	emit_signal("quit")
+
+
+func _on_RedHat_loose():
+	quit_game()
+
+
+func _on_RedHat_win():
+	quit_game()
