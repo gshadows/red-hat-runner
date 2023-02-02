@@ -10,9 +10,10 @@ onready var MenuUI = preload("res://ui/MenuUI.tscn")
 onready var mapgen = $MapGenerator
 onready var objgen = $ObjGenerator
 
-onready var chunk1 : Spatial = $chunk1
-onready var chunk2 : Spatial = $chunk2
-onready var chunk3 : Spatial = $chunk3
+onready var chunk1 := $chunk1
+onready var chunk2 := $chunk2
+onready var chunk3 := $chunk3
+onready var redhat := $RedHat
 
 var menu
 
@@ -26,18 +27,19 @@ func _ready():
 	regenerate_map(chunk1)
 	regenerate_map(chunk2)
 	regenerate_map(chunk3)
+	regenerate_obj(chunk1)
 	if USE_THREAD && not gen_thread.start(self, "_gen_thread_func", null, Thread.PRIORITY_LOW):
 		printerr("Map generation thread start failed!")
 		emit_signal("quit")
 
 
 func _process(delta:float):
-	#if is_player_runs:
-	chunk1.translation.z += RUN_SPEED * delta
-	chunk2.translation.z += RUN_SPEED * delta
-	chunk3.translation.z += RUN_SPEED * delta
-	if chunk3.translation.z >= MapGenerator.GROUND_LEN:
-		swicth_chunks()
+	if redhat.is_moving:
+		chunk1.translation.z += RUN_SPEED * delta
+		chunk2.translation.z += RUN_SPEED * delta
+		chunk3.translation.z += RUN_SPEED * delta
+		if chunk3.translation.z >= MapGenerator.GROUND_LEN:
+			swicth_chunks()
 
 
 func swicth_chunks():
@@ -51,6 +53,7 @@ func swicth_chunks():
 		var __ = gen_thread_semaphore.post()
 	else:
 		regenerate_map(chunk1)
+		regenerate_obj(chunk1)
 
 
 func _exit_tree():
@@ -68,6 +71,7 @@ func _gen_thread_func(_userdata):
 		if gen_thread_quit:
 			break
 		regenerate_map(chunk1)
+		regenerate_obj(chunk1)
 
 
 func regenerate_map(var parent:Node):
@@ -75,6 +79,9 @@ func regenerate_map(var parent:Node):
 	map.name = "Map"
 	mapgen.generate(map)
 	parent.call_deferred("add_child", map)
+
+
+func regenerate_obj(var parent:Node):
 	var obj = Spatial.new()
 	obj.name = "Obj"
 	objgen.generate(obj)

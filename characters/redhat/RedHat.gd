@@ -5,13 +5,21 @@ signal loose
 
 const LOOSE_REASON_DEATH := "LOOSE_DEATH"
 const LOOSE_REASON_TIME := "LOOSE_TIME"
+const ROADSIDE_POS := 2.7
+const JUMP_SPEED := 1.0
+const BLINK_COUNT := 8
+const TIME_HALF_JUMP := 0.5
+const TIME_BLINK := 0.125
+const TIME_KNOCK_OUT := 2.0
 
 onready var body := $RedHat
-onready var cloak_up := $RedHatCloakUP
-onready var cloak_dn := $RedHatCloakDN
-onready var foot_l := $RedHatFootL
-onready var foot_r := $RedHatFootR
+onready var cloak_up := $RedHat/RedHatCloakUP
+onready var cloak_dn := $RedHat/RedHatCloakDN
+onready var foot_l := $RedHat/RedHatFootL
+onready var foot_r := $RedHat/RedHatFootR
+onready var anim := $AnimationPlayer
 
+export var STRAFE_SPEED := 1.5
 export var TIME_LIMIT := 15.0
 export var lives := 3
 
@@ -24,41 +32,85 @@ var is_win := false
 var flowers := 0
 var loose_reason := ""
 var is_jump_up := true
+var is_moving := true
 
 var game_time := 0.0
 var timer: float
+var blink_time := 0.0
+var blink_count := 0
 
 
 func _process(delta:float):
 	if is_end_game:
 		return
 
+	# Blinking (invulnerable) after knock-out.
+	if blink_count > 0:
+		do_blinking(delta)
+
 	match state:
 		RUN:
-			pass
+			if Input.is_action_just_pressed("Jump"):
+				_change_state(JUMP)
+			elif Input.is_action_just_pressed("Hide"):
+				_change_state(HIDE)
+			else:
+				var strafe := 0
+				if Input.is_action_pressed("Left"):
+					strafe = -1
+				elif Input.is_action_pressed("Right"):
+					strafe = +1
+				var x = translation.x
+				x += strafe * STRAFE_SPEED * delta
+				x = clamp(x, -ROADSIDE_POS, +ROADSIDE_POS)
+				translation.x = x
+				
 		JUMP:
 			pass
 		HIDE:
-			pass
+			if Input.is_action_just_pressed("Jump"):
+				_change_state(JUMP)
+			elif Input.is_action_just_released("Hide"):
+				_change_state(RUN)
 		FALL:
-			pass
-		BIRDS:
-			pass
+			if not anim.is_playing():
+				_change_state(BIRDS)
 		SINK:
-			pass
-		BUBBLE:
-			pass
+			if not anim.is_playing():
+				_change_state(BUBBLE)
+		BIRDS, BUBBLE:
+			timer -= delta
+			if timer < 0:
+				lives -= 1
+				_change_state(RUN)
 
 	game_time += delta
 	_check_loose()
+
+
+func start_blinking():
+	blink_count = BLINK_COUNT
+	blink_time = TIME_BLINK
+	visible = true
+
+
+func do_blinking(delta:float):
+	blink_time -= delta
+	if (blink_time <= 0):
+		visible = not visible
+		blink_time = TIME_BLINK
+		if visible:
+			blink_count -= 1
 
 
 func _change_state(new_state: int):
 	if new_state == state:
 		return
 	if state == HIDE:
+		# Exiting from HIDE to any other: get up.
 		body.translation.y += 0.5
 	if state == JUMP:
+		# Exiting from JUMP to any other: return legs down.
 		foot_l.translation.y -= 0.25
 		foot_r.translation.y -= 0.25
 	cloak_up.visible = false
@@ -66,21 +118,26 @@ func _change_state(new_state: int):
 
 	match new_state:
 		RUN:
-			pass
+			is_moving = true
+			anim.play("run")
+			timer = 0
 		JUMP:
-			foot_l.translation.y += 0.25
-			foot_r.translation.y += 0.25
+			is_moving = true
 			is_jump_up = true
+			anim.stop()
+			foot_l.translation.y += 0.25 # Legs up.
+			foot_r.translation.y += 0.25
 		HIDE:
-			body.translation.y -= 0.5
+			is_moving = false
+			anim.stop()
+			body.translation.y -= 0.5 # Body down (croach).
 		FALL:
-			pass
-		BIRDS:
-			pass
+			anim.play("fall")
 		SINK:
-			pass
-		BUBBLE:
-			pass
+			anim.play("fall")
+		BIRDS, BUBBLE:
+			is_moving = false
+			timer = TIME_KNOCK_OUT
 
 	state = new_state
 
