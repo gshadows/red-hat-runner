@@ -10,5 +10,5 @@ func on_lives_changed(count: int):
 	lives.rect_size.x = count * LIVES_ICON_SIZE
 
 
-func on_flowes_changed(count: int):
+func on_flowers_changed(count):
 	flowers.text = str(count)

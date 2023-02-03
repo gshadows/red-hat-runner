@@ -22,9 +22,6 @@ var gen_thread_quit := false
 
 
 func _ready():
-	var __
-	__ = redhat.connect("lives_changed", $GameUI, "on_lives_changed")
-	__ = redhat.connect("flowers_changed", $GameUI, "on_flowes_changed")
 	regenerate_map(chunk1)
 	regenerate_map(chunk2)
 	regenerate_map(chunk3)

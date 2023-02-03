@@ -14,6 +14,8 @@ const TIME_HALF_JUMP := 0.5
 const TIME_BLINK := 0.125
 const TIME_KNOCK_OUT := 2.0
 const TIME_SLOWDOWN := 1.0
+const TIME_FALL := 0.5
+const TIME_SINK := 0.5
 
 const SimpleArea = preload("res://objects/SimpleArea.gd")
 
@@ -47,8 +49,8 @@ var blink_count := 0
 
 
 func _ready():
-	emit_signal("lives_changed", lives)
-	emit_signal("flowers_changed", flowers)
+	call_deferred("emit_signal", "lives_changed", lives)
+	call_deferred("emit_signal", "flowers_changed", flowers)
 	_change_state(RUN)
 
 
@@ -107,16 +109,22 @@ func _process(delta:float):
 			elif Input.is_action_just_released("Hide"):
 				_change_state(RUN)
 		FALL:
-			if not anim.is_playing():
+			timer -= delta
+			if (not anim.is_playing()) or (timer < 0):
 				_change_state(BIRDS)
+				if timer < 0:
+					print("Fall animation still playing: ", anim.current_animation, " at pos ", anim.current_animation_position)
 		SINK:
-			if not anim.is_playing():
+			timer -= delta
+			if timer > 0:
+				translation.y -= delta
+			else:
 				_change_state(BUBBLE)
 		BIRDS, BUBBLE:
 			timer -= delta
 			if timer < 0:
-				emit_signal("lives_changed", lives)
 				lives -= 1
+				emit_signal("lives_changed", lives)
 				_change_state(RUN)
 
 	game_time += delta
@@ -142,9 +150,9 @@ func _change_state(new_state: int):
 	if new_state == state:
 		return
 	print("STATE: ", stname(state), " -> ", stname(new_state))
-	if state == HIDE:
-		# Exiting from HIDE to any other: get up.
-		translation.y += 0.5
+	if (state == HIDE) or (state == BUBBLE):
+		# Exiting from HIDE or BUBBLE to any other: get up.
+		translation.y = 0
 	if state == JUMP:
 		# Exiting from JUMP to any other: return legs down.
 		foot_l.translation.y -= 0.25
@@ -166,8 +174,9 @@ func _change_state(new_state: int):
 			timer = TIME_SLOWDOWN
 		FALL:
 			anim.play("fall")
+			timer = TIME_FALL
 		SINK:
-			anim.play("fall")
+			timer = TIME_SINK
 		BIRDS, BUBBLE:
 			timer = TIME_KNOCK_OUT
 
@@ -206,7 +215,7 @@ func _win():
 	emit_signal("win")
 
 
-func _on_RedHat_area_entered(area):
+func _on_RedHat_area_entered(area:Area):
 	if is_end_game:
 		return
 	if not area is SimpleArea:
@@ -219,7 +228,9 @@ func _on_RedHat_area_entered(area):
 		SimpleArea.AreaType.RIVER:
 			_change_state(SINK)
 		SimpleArea.AreaType.FLOWER:
-			flowers += 1
-			emit_signal("flowers_changed", flowers)
+			if state == RUN:
+				area.queue_free()
+				flowers += 1
+				emit_signal("flowers_changed", flowers)
 		SimpleArea.AreaType.ENDGAME:
 			_win()
