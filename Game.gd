@@ -5,20 +5,34 @@ const USE_THREAD := false
 enum GameDifficulty { NORMAL }
 
 # Game settings: NORMAL
-const RUN_SPEED_NORMAL := 5.0
-const STRAFE_SPEED_NORMAL := 1.5
-const TIME_LIMIT_NORMAL := 30.0
-const LIVES_NORMAL := 3
+const RUN_SPEED_NORMAL		:= 5.0
+const STRAFE_SPEED_NORMAL	:= 1.5
+const TIME_LIMIT_NORMAL		:= 30.0
+const LIVES_NORMAL			:= 3
+const FILLED_BLOCK_LENGTH_NORMAL	:= 10
+const EMPTY_BLOCK_LENGTH_NORMAL		:= 3
+const EMPTY_LINE_PROBABILITY_NORMAL	:= 20
+const RIVER_PROBABILITY_NORMAL		:= 25
+const LOG_PROBABILITY_NORMAL		:= 75
+const STONE_PROBABILITY_NORMAL		:= 75
+const FLOWER_PROBABILITY_NORMAL		:= 50
 
 func setup_game(difficulty: int):
 	match difficulty:
 		GameDifficulty.NORMAL:
-			redhat.RUN_SPEED = RUN_SPEED_NORMAL
-			redhat.STRAFE_SPEED = STRAFE_SPEED_NORMAL
-			redhat.TIME_LIMIT = TIME_LIMIT_NORMAL
-			redhat.lives = LIVES_NORMAL
+			redhat.RUN_SPEED	= RUN_SPEED_NORMAL
+			redhat.STRAFE_SPEED	= STRAFE_SPEED_NORMAL
+			redhat.TIME_LIMIT	= TIME_LIMIT_NORMAL
+			redhat.lives		= LIVES_NORMAL
+			objgen.FILLED_BLOCK_LENGTH		= FILLED_BLOCK_LENGTH_NORMAL
+			objgen.EMPTY_BLOCK_LENGTH		= EMPTY_BLOCK_LENGTH_NORMAL
+			objgen.EMPTY_LINE_PROBABILITY	= EMPTY_LINE_PROBABILITY_NORMAL
+			objgen.RIVER_PROBABILITY		= RIVER_PROBABILITY_NORMAL
+			objgen.LOG_PROBABILITY			= LOG_PROBABILITY_NORMAL
+			objgen.STONE_PROBABILITY		= STONE_PROBABILITY_NORMAL
+			objgen.FLOWER_PROBABILITY		= FLOWER_PROBABILITY_NORMAL
 		_:
-			printerr("")
+			printerr("Wrong game difficulty: ", difficulty)
 			emit_signal("quit")
 
 signal quit
@@ -49,6 +63,7 @@ func _ready():
 	if USE_THREAD && not gen_thread.start(self, "_gen_thread_func", null, Thread.PRIORITY_LOW):
 		printerr("Map generation thread start failed!")
 		emit_signal("quit")
+	redhat.start_game()
 
 
 func _process(delta:float):
@@ -151,7 +166,7 @@ func quit_game():
 	emit_signal("quit")
 
 
-func _on_RedHat_loose():
+func _on_RedHat_loose(_reason):
 	quit_game()
 
 

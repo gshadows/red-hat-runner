@@ -77,13 +77,14 @@ surfaces/0 = {
 
 [sub_resource type="Animation" id=8]
 resource_name = "fall"
+length = 0.5
 tracks/0/type = "transform"
 tracks/0/path = NodePath("RedHat")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/keys = PoolRealArray( 0, 1, 0, 0.519569, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0.393728, 0.22537, 0, 0, 0, -0.707107, 0.707107, 1, 1, 1 )
+tracks/0/keys = PoolRealArray( 0, 1, 0, 0.519569, 0, 0, 0, 0, 1, 1, 1, 1, 0.5, 1, 0.393728, 0.22537, 0, 0, 0, -0.707107, 0.707107, 1, 1, 1 )
 
 [sub_resource type="Animation" id=7]
 resource_name = "run"

@@ -8,16 +8,21 @@ signal temperature_changed(value)
 
 const LOOSE_REASON_DEATH := "LOOSE_DEATH"
 const LOOSE_REASON_TIME := "LOOSE_TIME"
-const ROADSIDE_POS := 2.7
-const JUMP_SPEED := 1.0
-const BLINK_COUNT := 8
+const LOOSE_REASON_WOLF := "LOOSE_WOLF"
 
 const TIME_HALF_JUMP := 0.5
-const TIME_BLINK := 0.125
-const TIME_KNOCK_OUT := 2.0
+const TIME_BLINK := 0.05
+const TIME_KNOCK_OUT := 1.0
+const TIME_BUBBLE := 2.0
 const TIME_SLOWDOWN := 1.0
 const TIME_FALL := 0.5
-const TIME_SINK := 0.5
+const TIME_SINK := 0.15
+
+const ROADSIDE_POS := 2.7
+const JUMP_SPEED := 1.0
+const BLINK_COUNT := int(1.5 / TIME_BLINK) # 1.5 seconds
+const SINK_SPEED := 5.0
+const HIDE_SPEED := 0.5
 
 const SimpleArea = preload("res://objects/SimpleArea.gd")
 
@@ -28,10 +33,11 @@ onready var foot_l := $RedHat/RedHatFootL
 onready var foot_r := $RedHat/RedHatFootR
 onready var anim := $AnimationPlayer
 
-export var RUN_SPEED := 5.0
-export var STRAFE_SPEED := 1.5
-export var TIME_LIMIT := 30.0
-export var lives := 3
+# Configuration (based on difficulty).
+var RUN_SPEED: float
+var STRAFE_SPEED: float
+var TIME_LIMIT: float
+var lives: float
 
 
 enum { NONE, RUN, JUMP, HIDE, FALL, BIRDS, SINK, BUBBLE }
@@ -42,7 +48,7 @@ var is_win := false
 var flowers := 0
 var loose_reason := ""
 var is_jump_up := true
-var current_speed := RUN_SPEED
+var current_speed: float
 
 var game_time := 0.0
 var timer: float
@@ -50,7 +56,7 @@ var blink_time := 0.0
 var blink_count := 0
 
 
-func _ready():
+func start_game():
 	call_deferred("emit_signal", "lives_changed", lives)
 	call_deferred("emit_signal", "flowers_changed", flowers)
 	_change_state(RUN)
@@ -71,15 +77,7 @@ func _process(delta:float):
 			elif Input.is_action_just_pressed("Hide"):
 				_change_state(HIDE)
 			else:
-				var strafe := 0
-				if Input.is_action_pressed("Left"):
-					strafe = -1
-				elif Input.is_action_pressed("Right"):
-					strafe = +1
-				var x = translation.x
-				x += strafe * STRAFE_SPEED * delta
-				x = clamp(x, -ROADSIDE_POS, +ROADSIDE_POS)
-				translation.x = x
+				_do_strafe(delta)
 				
 		JUMP:
 			if timer > 0:
@@ -97,13 +95,14 @@ func _process(delta:float):
 				else:
 					_change_state(RUN)
 					translation.y = 0
+			_do_strafe(delta)
 		HIDE:
 			timer -= delta
 			if timer > 0: # Slowing down
 				timer -= delta
 				if timer <= 0:
 					anim.stop()
-					translation.y -= 0.5 # Body down (croach).
+					translation.y -= HIDE_SPEED * delta # Body down (croach).
 				else:
 					current_speed = RUN_SPEED * timer / TIME_SLOWDOWN
 			if Input.is_action_just_pressed("Jump"):
@@ -119,7 +118,7 @@ func _process(delta:float):
 		SINK:
 			timer -= delta
 			if timer > 0:
-				translation.y -= delta
+				translation.y -= SINK_SPEED * delta
 			else:
 				_change_state(BUBBLE)
 		BIRDS, BUBBLE:
@@ -127,6 +126,7 @@ func _process(delta:float):
 			if timer < 0:
 				lives -= 1
 				emit_signal("lives_changed", lives)
+				start_blinking()
 				_change_state(RUN)
 
 	game_time += delta
@@ -149,14 +149,22 @@ func do_blinking(delta:float):
 			blink_count -= 1
 
 
+func _do_strafe(delta:float):
+	var strafe := 0
+	if Input.is_action_pressed("Left"):
+		strafe = -1
+	elif Input.is_action_pressed("Right"):
+		strafe = +1
+	var x = translation.x
+	x += strafe * STRAFE_SPEED * delta
+	x = clamp(x, -ROADSIDE_POS, +ROADSIDE_POS)
+	translation.x = x
+
+
 func _change_state(new_state: int):
 	if new_state == state:
 		return
 	print("STATE: ", stname(state), " -> ", stname(new_state))
-	if (state == HIDE) or (state == BUBBLE):
-		# Exiting from HIDE or BUBBLE to any other: get up.
-		translation.y = 0
-		current_speed = RUN_SPEED
 	if state == JUMP:
 		# Exiting from JUMP to any other: return legs down.
 		foot_l.translation.y -= 0.25
@@ -166,9 +174,12 @@ func _change_state(new_state: int):
 
 	match new_state:
 		RUN:
+			translation.y = 0
+			current_speed = RUN_SPEED
 			anim.play("run")
 			timer = 0
 		JUMP:
+			current_speed = RUN_SPEED
 			is_jump_up = true
 			anim.stop()
 			foot_l.translation.y += 0.25 # Legs up.
@@ -181,8 +192,12 @@ func _change_state(new_state: int):
 			timer = TIME_FALL
 		SINK:
 			timer = TIME_SINK
-		BIRDS, BUBBLE:
+		BIRDS:
+			current_speed = 0
 			timer = TIME_KNOCK_OUT
+		BUBBLE:
+			current_speed = 0
+			timer = TIME_BUBBLE
 
 	state = new_state
 
@@ -210,12 +225,14 @@ func _loose(_reason):
 	is_end_game = true
 	is_win = false
 	loose_reason = _reason
-	emit_signal("loose")
+	current_speed = 0
+	emit_signal("loose", _reason)
 
 func _win():
 	print("===== WIN =====")
 	is_end_game = true
 	is_win = true
+	current_speed = 0
 	emit_signal("win")
 
 
@@ -228,13 +245,21 @@ func _on_RedHat_area_entered(area:Area):
 	var atype = (area as SimpleArea).area_type
 	match atype:
 		SimpleArea.AreaType.OBSTACLE:
-			_change_state(FALL)
+			if blink_count <= 0:
+				_change_state(FALL)
 		SimpleArea.AreaType.RIVER:
-			_change_state(SINK)
+			if (state == RUN) and (blink_count <= 0):
+				_change_state(SINK)
 		SimpleArea.AreaType.FLOWER:
-			if state == RUN:
+			if (state == RUN) or (state == JUMP):
 				area.queue_free()
 				flowers += 1
 				emit_signal("flowers_changed", flowers)
+		SimpleArea.AreaType.WOLF:
+			if blink_count <= 0:
+				_loose(LOOSE_REASON_WOLF)
 		SimpleArea.AreaType.ENDGAME:
+			if blink_count > 0:
+				blink_count = 0
+				visible = true
 			_win()

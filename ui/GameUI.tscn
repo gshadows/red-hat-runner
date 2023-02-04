@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://sprites/icon.png" type="Texture" id=1]
 [ext_resource path="res://ui/GameUI.gd" type="Script" id=2]
 [ext_resource path="res://ui/balkara_font/balkara_48.tres" type="DynamicFont" id=3]
 [ext_resource path="res://sprites/thermometer.png" type="Texture" id=4]
 [ext_resource path="res://sprites/thermometer_scale.png" type="Texture" id=5]
+[ext_resource path="res://sprites/flower.png" type="Texture" id=6]
 
 [node name="GameUI" type="Control"]
 anchor_right = 1.0
@@ -21,7 +22,7 @@ stretch_mode = 2
 margin_left = 343.0
 margin_right = 407.0
 margin_bottom = 64.0
-texture = ExtResource( 1 )
+texture = ExtResource( 6 )
 stretch_mode = 2
 
 [node name="FlowersCounter" type="Label" parent="."]

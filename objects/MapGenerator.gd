@@ -3,15 +3,15 @@ extends Node
 
 const GROUND_LEN := 10.0
 
-export var TREE_MIN_POS := 5.0
-export var TREE_MAX_POS := 9.0
-export var TREES_COUNT := 20
+const TREE_MIN_POS := 5.0
+const TREE_MAX_POS := 9.0
+const TREES_COUNT := 20
 
-export var BUSH_MIN_POS := 3.5
-export var BUSH_MAX_POS := 4.5
-export var BUSHES_COUNT := 6
+const BUSH_MIN_POS := 3.5
+const BUSH_MAX_POS := 4.5
+const BUSHES_COUNT := 6
 
-export var Z_DEVIATION := 0.1
+const Z_DEVIATION := 0.1
 
 onready var TreeScene = preload("res://objects/tree/Tree.tscn")
 onready var BushScene = preload("res://objects/bush/Bush.tscn")
