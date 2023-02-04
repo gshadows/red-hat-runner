@@ -6,7 +6,7 @@ signal start
 
 func _ready():
 	# Start wolf looking around :)
-	$Wolf/AnimationPlayer.play("Wolf_looking")
+	$Wolf/AnimationPlayer.play("looking")
 	$Wolf/AnimationPlayer.playback_speed /= 3
 
 

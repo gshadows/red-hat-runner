@@ -23,9 +23,6 @@ current = true
 size = 0.1
 near = 0.01
 
-[node name="Ground1" parent="." instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20 )
-
 [node name="Ground2" parent="." instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10 )
 
@@ -35,12 +32,21 @@ __meta__ = {
 }
 
 [node name="House" parent="." instance=ExtResource( 7 )]
-transform = Transform( 0.5, 0, -0.866026, 0, 1, 0, 0.866026, 0, 0.5, -2.42234, 0, -10.1106 )
+transform = Transform( 0.5, 0, -0.866026, 0, 1, 0, 0.866026, 0, 0.5, -2.42234, 0.294754, -10.1106 )
 
 [node name="Map" type="Spatial" parent="."]
 
 [node name="Tree1" parent="Map" instance=ExtResource( 4 )]
 transform = Transform( 0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, -7.22655, 0, -0.54393 )
+
+[node name="Tree22" parent="Map" instance=ExtResource( 4 )]
+transform = Transform( 0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, -7.33177, 0, -7.49782 )
+
+[node name="Tree23" parent="Map" instance=ExtResource( 4 )]
+transform = Transform( 0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, -6.63637, 0, -7.66884 )
+
+[node name="Tree24" parent="Map" instance=ExtResource( 4 )]
+transform = Transform( 0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, -6.12386, 0, -7.38699 )
 
 [node name="Tree2" parent="Map" instance=ExtResource( 4 )]
 transform = Transform( 0.352155, 0, 0.189703, 0, 0.4, 0, -0.189703, 0, 0.352155, -5.64772, 0, 0.998834 )
@@ -52,7 +58,7 @@ transform = Transform( 0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, -6.34165, 0, -3.0003 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.45358, 0, -13.2689 )
 
 [node name="Tree5" parent="Map" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.48204, 0, -15.9282 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.24973, 0, -14.2891 )
 
 [node name="Tree6" parent="Map" instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.77632, 0, -11.4934 )
