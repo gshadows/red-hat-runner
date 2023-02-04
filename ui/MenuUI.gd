@@ -29,3 +29,11 @@ func _input(event):
 		get_tree().set_input_as_handled()
 		emit_signal("close")
 		return
+
+
+func _on_SoundVolume_drag_ended(value_changed):
+	Settings.save()
+
+func _on_SoundVolume_value_changed(value):
+	AudioServer.set_bus_volume_db(Settings.AUDIO_BUS_MUSIC, linear2db(value))
+	Settings.music_volume = value

@@ -1,10 +1,156 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Menu.gd" type="Script" id=1]
 [ext_resource path="res://ui/MenuUI.tscn" type="PackedScene" id=2]
+[ext_resource path="res://objects/ground/ground.tscn" type="PackedScene" id=3]
+[ext_resource path="res://objects/tree/Tree.tscn" type="PackedScene" id=4]
+[ext_resource path="res://configs/menu_env.tres" type="Environment" id=5]
+[ext_resource path="res://objects/bush/Bush.tscn" type="PackedScene" id=6]
+[ext_resource path="res://objects/house/House.tscn" type="PackedScene" id=7]
+[ext_resource path="res://characters/wolf/Wolf.tscn" type="PackedScene" id=8]
+[ext_resource path="res://objects/log/Log.tscn" type="PackedScene" id=9]
 
 [node name="Menu" type="Spatial"]
 script = ExtResource( 1 )
 
 [node name="MenuUI" parent="." instance=ExtResource( 2 )]
 unique_name_in_owner = true
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 0.697265, 0.0691642, -0.713469, 0, 0.995334, 0.0964884, 0.716813, -0.067278, 0.694012, -7.01663, 0.996643, 0.934727 )
+environment = ExtResource( 5 )
+current = true
+size = 0.1
+
+[node name="Ground1" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20 )
+
+[node name="Ground2" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10 )
+
+[node name="Ground3" parent="." instance=ExtResource( 3 )]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="House" parent="." instance=ExtResource( 7 )]
+transform = Transform( 0.5, 0, -0.866026, 0, 1, 0, 0.866026, 0, 0.5, -2.42234, 0, -10.1106 )
+
+[node name="Map" type="Spatial" parent="."]
+
+[node name="Tree1" parent="Map" instance=ExtResource( 4 )]
+transform = Transform( 0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, -7.22655, 0, -0.54393 )
+
+[node name="Tree2" parent="Map" instance=ExtResource( 4 )]
+transform = Transform( 0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, -5.64772, 0, 0.998834 )
+
+[node name="Tree3" parent="Map" instance=ExtResource( 4 )]
+transform = Transform( 0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, -6.34165, 0, -3.0003 )
+
+[node name="Tree4" parent="Map" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.45358, 0, -13.2689 )
+
+[node name="Tree5" parent="Map" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.48204, 0, -15.9282 )
+
+[node name="Tree6" parent="Map" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.77632, 0, -11.4934 )
+
+[node name="Tree7" parent="Map" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.9422, 0, -13.3453 )
+
+[node name="Tree8" parent="Map" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.24024, 0, -8.22815 )
+
+[node name="Tree9" parent="Map" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.16432, 0, -7.74081 )
+
+[node name="Tree10" parent="Map" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.6985, 0, -9.00791 )
+
+[node name="Tree11" parent="Map" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.92441, 0, -0.966684 )
+
+[node name="Tree12" parent="Map" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.0453, 0, -3.74456 )
+
+[node name="Tree13" parent="Map" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.65167, 0, -3.64709 )
+
+[node name="Tree14" parent="Map" instance=ExtResource( 4 )]
+transform = Transform( 0.75, 0, 0, 0, 0.75, 0, 0, 0, 0.75, 9.408, 0, -5.93762 )
+
+[node name="Tree15" parent="Map" instance=ExtResource( 4 )]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 3.90098, 0, -4.71925 )
+
+[node name="Tree16" parent="Map" instance=ExtResource( 4 )]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 4.24212, 0, -10.2263 )
+
+[node name="Tree17" parent="Map" instance=ExtResource( 4 )]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 5.60669, 0, -6.52244 )
+
+[node name="Tree18" parent="Map" instance=ExtResource( 4 )]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 6.58138, 0, -10.1288 )
+
+[node name="Tree19" parent="Map" instance=ExtResource( 4 )]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 8.18962, 0, -2.47746 )
+
+[node name="Tree20" parent="Map" instance=ExtResource( 4 )]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 7.65354, 0, -0.284404 )
+
+[node name="Tree21" parent="Map" instance=ExtResource( 4 )]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 6.33771, 0, -5.30407 )
+
+[node name="Bush1" parent="Map" instance=ExtResource( 6 )]
+transform = Transform( 0.75, 0, 0, 0, 0.75, 0, 0, 0, 0.75, -3.60445, 0, 1.66072 )
+
+[node name="Bush2" parent="Map" instance=ExtResource( 6 )]
+transform = Transform( 0.75, 0, 0, 0, 0.75, 0, 0, 0, 0.75, 3.60828, 0, -2.82287 )
+
+[node name="Bush3" parent="Map" instance=ExtResource( 6 )]
+transform = Transform( 0.75, 0, 0, 0, 0.75, 0, 0, 0, 0.75, 3.55954, 0, -5.79568 )
+
+[node name="Bush4" parent="Map" instance=ExtResource( 6 )]
+transform = Transform( 0.75, 0, 0, 0, 0.75, 0, 0, 0, 0.75, 3.31587, 0, -7.69634 )
+
+[node name="Bush5" parent="Map" instance=ExtResource( 6 )]
+transform = Transform( 0.75, 0, 0, 0, 0.75, 0, 0, 0, 0.75, 3.3646, 0, -10.4742 )
+
+[node name="Bush6" parent="Map" instance=ExtResource( 6 )]
+transform = Transform( 0.75, 0, 0, 0, 0.75, 0, 0, 0, 0.75, 5.50893, 0, -11.1565 )
+
+[node name="Bush7" parent="Map" instance=ExtResource( 6 )]
+transform = Transform( 0.75, 0, 0, 0, 0.75, 0, 0, 0, 0.75, 6.62983, 0, -5.64948 )
+
+[node name="Bush8" parent="Map" instance=ExtResource( 6 )]
+transform = Transform( 0.75, 0, 0, 0, 0.75, 0, 0, 0, 0.75, -7.21082, 0, -1.94565 )
+
+[node name="Bush9" parent="Map" instance=ExtResource( 6 )]
+transform = Transform( 0.75, 0, 0, 0, 0.75, 0, 0, 0, 0.75, -5.89499, 0, -4.23617 )
+
+[node name="Bush10" parent="Map" instance=ExtResource( 6 )]
+transform = Transform( 0.75, 0, 0, 0, 0.75, 0, 0, 0, 0.75, -3.55572, 0, 0.344886 )
+
+[node name="Log1" parent="Map" instance=ExtResource( 9 )]
+transform = Transform( -0.294852, 0, -0.789122, 0, 0.842408, 0, 0.789122, 0, -0.294852, 1.68663, 0.0277246, -7.4224 )
+
+[node name="Log2" parent="Map" instance=ExtResource( 9 )]
+transform = Transform( -0.294852, 0, -0.789122, 0, 0.842408, 0, 0.789122, 0, -0.294852, 2.02378, 0.0277246, -7.29884 )
+
+[node name="Log4" parent="Map" instance=ExtResource( 9 )]
+transform = Transform( -0.294852, 0, -0.789122, 0, 0.842408, 0, 0.789122, 0, -0.294852, 2.39019, 0.0277246, -7.16194 )
+
+[node name="Log3" parent="Map" instance=ExtResource( 9 )]
+transform = Transform( -0.294852, 0, -0.789122, 0, 0.842408, 0, 0.789122, 0, -0.294852, 1.92209, 0.324128, -7.4275 )
+
+[node name="Log5" parent="Map" instance=ExtResource( 9 )]
+transform = Transform( -0.294852, 0, -0.789122, 0, 0.842408, 0, 0.789122, 0, -0.294852, 2.31324, 0.324128, -7.33902 )
+
+[node name="Sun" type="DirectionalLight" parent="."]
+transform = Transform( 0.304282, 0.522739, -0.796339, 0, 0.83598, 0.54876, 0.952582, -0.166978, 0.254374, 0, 8.25052, 10.2324 )
+
+[node name="Wolf" parent="." instance=ExtResource( 8 )]
+transform = Transform( 0.710099, 0, -0.704102, 0, 1, 0, 0.704102, 0, 0.710099, 2.90137, -0.890396, -8.25357 )
+
+[connection signal="quit" from="MenuUI" to="." method="quit_game"]
+[connection signal="start" from="MenuUI" to="." method="start_game"]

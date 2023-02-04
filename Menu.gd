@@ -5,10 +5,11 @@ signal start
 
 
 func _ready():
-	var __
-	__ = $"%MenuUI".connect("quit", self, "quit_game")
-	__ = $"%MenuUI".connect("start", self, "start_game")
-	pass
+	# Restore sound volume.
+	$MusicSlider.value = Settings.music_volume
+	# Start wolf looking around :)
+	$Wolf/AnimationPlayer.play("Wolf_looking")
+	$Wolf/AnimationPlayer.playback_speed /= 3
 
 
 func quit_game():
