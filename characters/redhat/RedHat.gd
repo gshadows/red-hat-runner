@@ -11,6 +11,7 @@ const LOOSE_REASON_TIME := "LOOSE_TIME"
 const ROADSIDE_POS := 2.7
 const JUMP_SPEED := 1.0
 const BLINK_COUNT := 8
+
 const TIME_HALF_JUMP := 0.5
 const TIME_BLINK := 0.125
 const TIME_KNOCK_OUT := 2.0
@@ -29,7 +30,7 @@ onready var anim := $AnimationPlayer
 
 export var RUN_SPEED := 5.0
 export var STRAFE_SPEED := 1.5
-export var TIME_LIMIT := 15.0
+export var TIME_LIMIT := 30.0
 export var lives := 3
 
 
@@ -155,6 +156,7 @@ func _change_state(new_state: int):
 	if (state == HIDE) or (state == BUBBLE):
 		# Exiting from HIDE or BUBBLE to any other: get up.
 		translation.y = 0
+		current_speed = RUN_SPEED
 	if state == JUMP:
 		# Exiting from JUMP to any other: return legs down.
 		foot_l.translation.y -= 0.25

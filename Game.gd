@@ -2,6 +2,22 @@ extends Spatial
 
 const USE_THREAD := false
 
+enum GameDifficulty { NORMAL }
+
+# Game settings: NORMAL
+export var RUN_SPEED_NORMAL := 5.0
+export var STRAFE_SPEED_NORMAL := 1.5
+export var TIME_LIMIT_NORMAL := 30.0
+export var LIVES_NORMAL := 3
+
+func setup_game(difficulty: int):
+	match difficulty:
+		GameDifficulty.NORMAL:
+			pass
+		_:
+			printerr("")
+			emit_signal("quit")
+
 signal quit
 
 onready var MenuUI = preload("res://ui/MenuUI.tscn")

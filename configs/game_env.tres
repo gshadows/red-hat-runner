@@ -5,7 +5,7 @@ sky_top_color = Color( 1, 1, 1, 1 )
 
 [resource]
 background_sky = SubResource( 1 )
-ambient_light_color = Color( 0.541176, 0.737255, 0.901961, 1 )
+ambient_light_color = Color( 0.780392, 0.780392, 0.780392, 1 )
 ambient_light_energy = 2.0
 ss_reflections_enabled = true
 ssao_enabled = true

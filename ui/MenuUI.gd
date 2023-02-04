@@ -11,8 +11,10 @@ var is_ingame
 
 
 func _ready():
+	# Restore sound volume.
+	$SoundVolume.value = Settings.sound_volume
+	# Rename START/CONTINUE button.
 	but_start.text = tr("CONTINUE") if is_ingame else tr("START")
-	pass
 
 
 func _on_ButtonQuit_pressed():
@@ -32,8 +34,9 @@ func _input(event):
 
 
 func _on_SoundVolume_drag_ended(value_changed):
-	Settings.save()
+	if value_changed:
+		Settings.save()
 
 func _on_SoundVolume_value_changed(value):
-	AudioServer.set_bus_volume_db(Settings.AUDIO_BUS_MUSIC, linear2db(value))
-	Settings.music_volume = value
+	AudioServer.set_bus_volume_db(Settings.AUDIO_BUS_MASTER, linear2db(value))
+	Settings.sound_volume = value
