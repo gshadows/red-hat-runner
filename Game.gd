@@ -5,15 +5,18 @@ const USE_THREAD := false
 enum GameDifficulty { NORMAL }
 
 # Game settings: NORMAL
-export var RUN_SPEED_NORMAL := 5.0
-export var STRAFE_SPEED_NORMAL := 1.5
-export var TIME_LIMIT_NORMAL := 30.0
-export var LIVES_NORMAL := 3
+const RUN_SPEED_NORMAL := 5.0
+const STRAFE_SPEED_NORMAL := 1.5
+const TIME_LIMIT_NORMAL := 30.0
+const LIVES_NORMAL := 3
 
 func setup_game(difficulty: int):
 	match difficulty:
 		GameDifficulty.NORMAL:
-			pass
+			redhat.RUN_SPEED = RUN_SPEED_NORMAL
+			redhat.STRAFE_SPEED = STRAFE_SPEED_NORMAL
+			redhat.TIME_LIMIT = TIME_LIMIT_NORMAL
+			redhat.lives = LIVES_NORMAL
 		_:
 			printerr("")
 			emit_signal("quit")
@@ -38,6 +41,7 @@ var gen_thread_quit := false
 
 
 func _ready():
+	setup_game(GameDifficulty.NORMAL)
 	regenerate_map(chunk1)
 	regenerate_map(chunk2)
 	regenerate_map(chunk3)
