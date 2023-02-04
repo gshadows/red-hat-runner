@@ -67,4 +67,5 @@ collision_mask = 0
 [connection signal="flowers_changed" from="RedHat" to="GameUI" method="on_flowers_changed"]
 [connection signal="lives_changed" from="RedHat" to="GameUI" method="on_lives_changed"]
 [connection signal="loose" from="RedHat" to="." method="_on_RedHat_loose"]
+[connection signal="temperature_changed" from="RedHat" to="GameUI" method="on_temperature_changed"]
 [connection signal="win" from="RedHat" to="." method="_on_RedHat_win"]

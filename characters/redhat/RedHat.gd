@@ -4,6 +4,7 @@ signal win
 signal loose
 signal lives_changed(count)
 signal flowers_changed(count)
+signal temperature_changed(value)
 
 const LOOSE_REASON_DEATH := "LOOSE_DEATH"
 const LOOSE_REASON_TIME := "LOOSE_TIME"
@@ -128,6 +129,7 @@ func _process(delta:float):
 				_change_state(RUN)
 
 	game_time += delta
+	emit_signal("temperature_changed", 1.0 - game_time / TIME_LIMIT )
 	_check_loose()
 
 
