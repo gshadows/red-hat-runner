@@ -27,12 +27,10 @@ near = 0.01
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10 )
 
 [node name="Ground3" parent="." instance=ExtResource( 3 )]
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="House" parent="." instance=ExtResource( 7 )]
 transform = Transform( 0.5, 0, -0.866026, 0, 1, 0, 0.866026, 0, 0.5, -2.42234, 0.294754, -10.1106 )
+script = null
 
 [node name="Map" type="Spatial" parent="."]
 
@@ -158,6 +156,7 @@ transform = Transform( 0.304282, 0.522739, -0.796339, 0, 0.83598, 0.54876, 0.952
 
 [node name="Wolf" parent="." instance=ExtResource( 8 )]
 transform = Transform( 0.710099, 0, -0.704102, 0, 1, 0, 0.704102, 0, 0.710099, 2.90137, -0.890396, -8.25357 )
+script = null
 
 [connection signal="quit" from="MenuUI" to="." method="quit_game"]
 [connection signal="start" from="MenuUI" to="." method="start_game"]
