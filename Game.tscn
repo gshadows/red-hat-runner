@@ -8,7 +8,7 @@
 [ext_resource path="res://ui/GameUI.tscn" type="PackedScene" id=6]
 [ext_resource path="res://configs/default_env.tres" type="Environment" id=7]
 [ext_resource path="res://objects/ObjGenerator.gd" type="Script" id=8]
-[ext_resource path="res://audio/389788__fmceretta__fun-music-created-with-soundtrack-pro.mp3" type="AudioStream" id=9]
+[ext_resource path="res://audio/389788__fmceretta__fun-music.mp3" type="AudioStream" id=9]
 
 [node name="Game" type="Spatial"]
 script = ExtResource( 1 )

@@ -44,7 +44,7 @@ var debug_mode := 0
 # Game settings: NORMAL
 const RUN_SPEED_NORMAL		:= 5.0
 const STRAFE_SPEED_NORMAL	:= 1.5
-const TIME_LIMIT_NORMAL		:= 70.0
+const TIME_LIMIT_NORMAL		:= 80.0
 const CHUNKS_TOTAL_NORMAL	:= 20
 const LIVES_NORMAL			:= 3
 const FILLED_BLOCK_LENGTH_NORMAL	:= 10

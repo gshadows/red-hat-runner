@@ -90,7 +90,7 @@ func change_state(new_state:int):
 		WALK_IN:
 			visible = true
 			translation = Vector3(START_X * -walk_dir, 0.0, START_Z)
-			rotation.y = walk_dir * PI / 2
+			rotation.y = -walk_dir * PI / 2
 			anim.play(ANIM_WALK)
 		WALK_OUT:
 			anim.play(ANIM_WALK)
