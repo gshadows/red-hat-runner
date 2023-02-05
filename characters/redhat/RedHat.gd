@@ -35,6 +35,7 @@ onready var foot_r := $RedHat/RedHatFootR
 onready var anim := $AnimationPlayer
 onready var sndFall := $SoundFall
 onready var sndSink := $SoundSink
+onready var sndPickup := $SoundPickup
 
 # Configuration (based on difficulty).
 var RUN_SPEED: float
@@ -278,6 +279,7 @@ func _on_RedHat_area_entered(area:Area):
 			if (state == RUN) or (state == JUMP):
 				area.queue_free()
 				flowers += 1
+				sndPickup.play()
 				emit_signal("flowers_changed", flowers)
 		SimpleArea.AreaType.WOLF:
 			if blink_count <= 0:

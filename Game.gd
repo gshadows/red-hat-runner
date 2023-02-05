@@ -18,6 +18,7 @@ onready var chunk3 := $chunk3
 onready var redhat := $RedHat
 onready var game_ui := $GameUI
 onready var music := $MusicPlayer
+onready var sndKnock := $SoundKnock
 
 onready var House := preload("res://objects/house/House.tscn")
 
@@ -30,8 +31,7 @@ var wolf_period: int
 var is_wolf_from_left: bool
 var is_wolf_watching := false
 
-var difficulty: int
-var scores_table_name: String
+var difficulty: String
 
 var gen_thread := Thread.new()
 var gen_thread_mutex := Mutex.new()
@@ -44,8 +44,6 @@ var debug_mode := 0
 # Game settings: NORMAL
 const RUN_SPEED_NORMAL		:= 5.0
 const STRAFE_SPEED_NORMAL	:= 1.5
-const TIME_LIMIT_NORMAL		:= 80.0
-const CHUNKS_TOTAL_NORMAL	:= 20
 const LIVES_NORMAL			:= 3
 const FILLED_BLOCK_LENGTH_NORMAL	:= 10
 const EMPTY_BLOCK_LENGTH_NORMAL		:= 3
@@ -56,14 +54,14 @@ const STONE_PROBABILITY_NORMAL		:= 75
 const FLOWER_PROBABILITY_NORMAL		:= 50
 const WOLF_PERIOD_NORMAL := 5
 
-func setup_game(new_difficulty: int):
-	match new_difficulty:
-		GameDifficulty.NORMAL:
-			difficulty = new_difficulty
-			scores_table_name = Settings.SCORES_TABLE_NORMAL
+var startup_time_limit: float
+
+func setup_game():
+	redhat.TIME_LIMIT = startup_time_limit
+	match difficulty:
+		Settings.SCORES_TABLE_NORMAL:
 			redhat.RUN_SPEED	= RUN_SPEED_NORMAL
 			redhat.STRAFE_SPEED	= STRAFE_SPEED_NORMAL
-			redhat.TIME_LIMIT	= TIME_LIMIT_NORMAL
 			redhat.lives		= LIVES_NORMAL
 			objgen.FILLED_BLOCK_LENGTH		= FILLED_BLOCK_LENGTH_NORMAL
 			objgen.EMPTY_BLOCK_LENGTH		= EMPTY_BLOCK_LENGTH_NORMAL
@@ -72,7 +70,6 @@ func setup_game(new_difficulty: int):
 			objgen.LOG_PROBABILITY			= LOG_PROBABILITY_NORMAL
 			objgen.STONE_PROBABILITY		= STONE_PROBABILITY_NORMAL
 			objgen.FLOWER_PROBABILITY		= FLOWER_PROBABILITY_NORMAL
-			chunks_left = CHUNKS_TOTAL_NORMAL
 			WOLD_PERIOD = WOLF_PERIOD_NORMAL
 			game_ui.high_score = Settings.get_high_score(Settings.SCORES_TABLE_NORMAL)
 		_:
@@ -80,12 +77,12 @@ func setup_game(new_difficulty: int):
 			emit_signal("quit")
 
 func save_score(score:int):
-	Settings.set_score(scores_table_name, score)
+	Settings.set_score(difficulty, score)
 	Settings.save()
 
 
 func _ready():
-	setup_game(GameDifficulty.NORMAL)
+	setup_game()
 	wolf_period = WOLD_PERIOD
 	is_wolf_from_left = true # TODO random?
 	regenerate_map(chunk1)
@@ -261,6 +258,8 @@ func _on_RedHat_loose(_reason):
 
 
 func _on_RedHat_win():
+	sndKnock.play()
+	music.stop()
 	$GameUI.on_win()
 	yield(get_tree().create_timer(END_GAME_TIMEOUT), "timeout")
 	quit_game()

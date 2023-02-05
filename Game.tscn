@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Game.gd" type="Script" id=1]
 [ext_resource path="res://objects/ground/ground.tscn" type="PackedScene" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://configs/default_env.tres" type="Environment" id=7]
 [ext_resource path="res://objects/ObjGenerator.gd" type="Script" id=8]
 [ext_resource path="res://audio/389788__fmceretta__fun-music.mp3" type="AudioStream" id=9]
+[ext_resource path="res://audio/Knock (modified) - 256513.mp3" type="AudioStream" id=10]
 
 [node name="Game" type="Spatial"]
 script = ExtResource( 1 )
@@ -76,6 +77,9 @@ collision_mask = 0
 stream = ExtResource( 9 )
 volume_db = -13.983
 autoplay = true
+
+[node name="SoundKnock" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 10 )
 
 [connection signal="flowers_changed" from="RedHat" to="GameUI" method="on_flowers_changed"]
 [connection signal="lives_changed" from="RedHat" to="GameUI" method="on_lives_changed"]

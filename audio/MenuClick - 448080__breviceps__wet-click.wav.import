@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/MenuClick - 448080__breviceps__wet-click.wav-7cf8e9a48874f555d9ab92723cdc314d.sample"
+
+[deps]
+
+source_file="res://audio/MenuClick - 448080__breviceps__wet-click.wav"
+dest_files=[ "res://.import/MenuClick - 448080__breviceps__wet-click.wav-7cf8e9a48874f555d9ab92723cdc314d.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

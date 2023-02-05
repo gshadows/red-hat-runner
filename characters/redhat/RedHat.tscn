@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://audio/346694__deleted_user_2104797__body-fall_02.wav" type="AudioStream" id=1]
 [ext_resource path="res://characters/redhat/rh-test-foot.tres" type="Material" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://characters/redhat/rh-test-cloak.tres" type="Material" id=4]
 [ext_resource path="res://characters/redhat/RedHat.gd" type="Script" id=5]
 [ext_resource path="res://audio/421184__inspectorj__water-pouring-a.wav" type="AudioStream" id=6]
+[ext_resource path="res://audio/Pickup - 531175__ryusa__synth-glockenspiel-bell-item-money-gold-coin-pick-up.wav" type="AudioStream" id=7]
 
 [sub_resource type="ArrayMesh" id=1]
 resource_name = "redhat_Cone001"
@@ -165,5 +166,8 @@ stream = ExtResource( 1 )
 
 [node name="SoundSink" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 6 )
+
+[node name="SoundPickup" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
 
 [connection signal="area_entered" from="." to="." method="_on_RedHat_area_entered"]
