@@ -16,6 +16,7 @@ onready var chunk1 := $chunk1
 onready var chunk2 := $chunk2
 onready var chunk3 := $chunk3
 onready var redhat := $RedHat
+onready var game_ui := $GameUI
 
 onready var House := preload("res://objects/house/House.tscn")
 
@@ -26,6 +27,9 @@ var wolf = null
 var chunks_left: int
 var wolf_period: int
 var is_wolf_from_left: bool
+
+var difficulty: int
+var scores_table_name: String
 
 var gen_thread := Thread.new()
 var gen_thread_mutex := Mutex.new()
@@ -51,6 +55,8 @@ const WOLF_PERIOD_NORMAL := 5
 func setup_game(difficulty: int):
 	match difficulty:
 		GameDifficulty.NORMAL:
+			self.difficulty = difficulty
+			scores_table_name = Settings.SCORES_TABLE_NORMAL
 			redhat.RUN_SPEED	= RUN_SPEED_NORMAL
 			redhat.STRAFE_SPEED	= STRAFE_SPEED_NORMAL
 			redhat.TIME_LIMIT	= TIME_LIMIT_NORMAL
@@ -64,9 +70,14 @@ func setup_game(difficulty: int):
 			objgen.FLOWER_PROBABILITY		= FLOWER_PROBABILITY_NORMAL
 			chunks_left = CHUNKS_TOTAL_NORMAL
 			WOLD_PERIOD = WOLF_PERIOD_NORMAL
+			game_ui.high_score = Settings.get_high_score(Settings.SCORES_TABLE_NORMAL)
 		_:
 			printerr("Wrong game difficulty: ", difficulty)
 			emit_signal("quit")
+
+func save_score(score:int):
+	Settings.set_score(scores_table_name, score)
+	Settings.save()
 
 
 func _ready():
@@ -213,6 +224,7 @@ func close_menu():
 
 
 func quit_game():
+	save_score(redhat.flowers)
 	get_tree().paused = false
 	emit_signal("quit")
 

@@ -8,8 +8,6 @@ var cur_scene
 
 func _ready():
 	randomize()
-	Settings.reload()
-	Settings.apply()
 	open_menu()
 
 

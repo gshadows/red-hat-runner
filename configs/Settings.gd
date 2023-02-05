@@ -13,12 +13,18 @@ var full_screen := false
 var debug := OS.is_debug_build()
 var lang := "ru"
 
-var scores_normal := []
+var scores_normal := _empty_scores()
 
 
 func _ready():
 	reload()
 	apply()
+
+
+func _empty_scores() -> Array:
+	var scores = []
+	for i in SCORES_TABLE_SIZE: scores.push_back(0)
+	return scores
 
 
 func save():
@@ -85,7 +91,7 @@ func set_score(difficulty:String, value:int):
 
 func get_high_score(difficulty:String) -> int:
 	var table = get_scores_table(difficulty)
-	return table.back() if table != null else -1
+	return table.back() if table else -1
 
 
 func get_scores_table(difficulty:String):

@@ -11,6 +11,8 @@ onready var therm := $Thermometer
 var is_blinking := false
 var is_blink_visible := false
 var blink_time := 0.0
+var is_new_high_score := false
+var high_score := 0
 
 
 func _process(delta):
@@ -31,6 +33,9 @@ func on_lives_changed(count: int):
 
 func on_flowers_changed(count: int):
 	flowers.text = str(count)
+	if (not is_new_high_score) and (high_score < count):
+		is_new_high_score = true
+		flowers.add_color_override("font_color", Color.magenta)
 
 
 func on_temperature_changed(value: float):
