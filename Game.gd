@@ -1,13 +1,36 @@
 extends Spatial
 
+signal quit
+
 const USE_THREAD := false
 
 enum GameDifficulty { NORMAL }
+
+onready var MenuUI = preload("res://ui/MenuUI.tscn")
+onready var mapgen = $MapGenerator
+onready var objgen = $ObjGenerator
+
+onready var chunk1 := $chunk1
+onready var chunk2 := $chunk2
+onready var chunk3 := $chunk3
+onready var redhat := $RedHat
+
+onready var House := preload("res://objects/house/House.tscn")
+
+var menu
+var chunks_left: int
+
+var gen_thread := Thread.new()
+var gen_thread_mutex := Mutex.new()
+var gen_thread_semaphore := Semaphore.new()
+var gen_thread_quit := false
+
 
 # Game settings: NORMAL
 const RUN_SPEED_NORMAL		:= 5.0
 const STRAFE_SPEED_NORMAL	:= 1.5
 const TIME_LIMIT_NORMAL		:= 30.0
+const CHUNKS_TOTAL_NORMAL	:= 10
 const LIVES_NORMAL			:= 3
 const FILLED_BLOCK_LENGTH_NORMAL	:= 10
 const EMPTY_BLOCK_LENGTH_NORMAL		:= 3
@@ -31,27 +54,10 @@ func setup_game(difficulty: int):
 			objgen.LOG_PROBABILITY			= LOG_PROBABILITY_NORMAL
 			objgen.STONE_PROBABILITY		= STONE_PROBABILITY_NORMAL
 			objgen.FLOWER_PROBABILITY		= FLOWER_PROBABILITY_NORMAL
+			chunks_left = CHUNKS_TOTAL_NORMAL
 		_:
 			printerr("Wrong game difficulty: ", difficulty)
 			emit_signal("quit")
-
-signal quit
-
-onready var MenuUI = preload("res://ui/MenuUI.tscn")
-onready var mapgen = $MapGenerator
-onready var objgen = $ObjGenerator
-
-onready var chunk1 := $chunk1
-onready var chunk2 := $chunk2
-onready var chunk3 := $chunk3
-onready var redhat := $RedHat
-
-var menu
-
-var gen_thread := Thread.new()
-var gen_thread_mutex := Mutex.new()
-var gen_thread_semaphore := Semaphore.new()
-var gen_thread_quit := false
 
 
 func _ready():
@@ -59,7 +65,9 @@ func _ready():
 	regenerate_map(chunk1)
 	regenerate_map(chunk2)
 	regenerate_map(chunk3)
-	regenerate_obj(chunk1)
+	regenerate_obj(chunk2, true)
+	regenerate_obj(chunk1, false)
+	chunks_left -= 3
 	if USE_THREAD && not gen_thread.start(self, "_gen_thread_func", null, Thread.PRIORITY_LOW):
 		printerr("Map generation thread start failed!")
 		emit_signal("quit")
@@ -83,12 +91,12 @@ func swicth_chunks():
 	chunk1 = tmp
 	chunk1.translation.z -= MapGenerator.GROUND_LEN * 3
 	clear_chunk1()
+	chunks_left -= 1
 	if USE_THREAD:
 		var __ = gen_thread_semaphore.post()
 	else:
 		regenerate_map(chunk1)
-		regenerate_obj(chunk1)
-
+		regenerate_obj(chunk1, false)
 
 func _exit_tree():
 	if USE_THREAD:
@@ -105,21 +113,25 @@ func _gen_thread_func(_userdata):
 		if gen_thread_quit:
 			break
 		regenerate_map(chunk1)
-		regenerate_obj(chunk1)
+		regenerate_obj(chunk1, false)
 
 
-func regenerate_map(var parent:Node):
+func regenerate_map(parent:Node):
 	var map = Spatial.new()
 	map.name = "Map"
 	mapgen.generate(map)
 	parent.call_deferred("add_child", map)
 
 
-func regenerate_obj(var parent:Node):
-	var obj = Spatial.new()
-	obj.name = "Obj"
-	objgen.generate(obj)
-	parent.call_deferred("add_child", obj)
+func regenerate_obj(parent:Node, flowers_only:bool):
+	if chunks_left > 0:
+		var obj = Spatial.new()
+		obj.name = "Obj"
+		objgen.generate(obj, flowers_only)
+		parent.call_deferred("add_child", obj)
+	else:
+		var house = House.instance()
+		parent.call_deferred("add_child", house)
 
 
 func clear_chunk1():

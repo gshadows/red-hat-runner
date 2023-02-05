@@ -36,7 +36,7 @@ func start_game():
 
 func unload():
 	if cur_scene:
-		remove_child(cur_scene)
+		call_deferred("remove_child", cur_scene)
 		cur_scene.queue_free()
 		cur_scene = null
 

@@ -8,7 +8,10 @@ onready var therm := $Thermometer
 
 
 func on_lives_changed(count: int):
-	lives.rect_size.x = count * LIVES_ICON_SIZE
+	if count < 1:
+		lives.visible = false # Can't set width less then single size.
+	else:
+		lives.rect_size.x = count * LIVES_ICON_SIZE
 
 
 func on_flowers_changed(count: int):

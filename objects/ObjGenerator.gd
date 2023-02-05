@@ -40,10 +40,10 @@ func _ready():
 		start_seed = rng.seed
 
 
-func generate(var parent: Spatial):
+func generate(parent: Spatial, flowers_only: bool):
 	var line : int
 	for i in NUM_LINES:
-		if is_filling:
+		if is_filling and not flowers_only:
 			line = gen_line_obstacles(parent, i)
 			lines_filled += 1
 			#print("Lines filled: ", lines_filled)
@@ -63,7 +63,7 @@ func generate(var parent: Spatial):
 		push_line(line)
 
 
-func gen_line_flowers(var parent: Spatial, var line_num:int, var line: int):
+func gen_line_flowers(parent: Spatial, line_num:int, line: int):
 	if not (line & 1) and check(FLOWER_PROBABILITY):
 		make_flower(parent, line_num, +1)
 	if not (line & 2) and check(FLOWER_PROBABILITY):
@@ -72,7 +72,7 @@ func gen_line_flowers(var parent: Spatial, var line_num:int, var line: int):
 		make_flower(parent, line_num, -1)
 
 
-func gen_line_obstacles(var parent: Spatial, var line_num:int) -> int:
+func gen_line_obstacles(parent: Spatial, line_num:int) -> int:
 	var line := gen_next_line_mask() # Bits set for allowed positions.
 	if (line == 0) or check(EMPTY_LINE_PROBABILITY):
 		return 0 # Empty line.
@@ -101,27 +101,27 @@ func gen_line_obstacles(var parent: Spatial, var line_num:int) -> int:
 	return stones
 
 
-func make_river(var parent: Spatial, var line_num:int):
+func make_river(parent: Spatial, line_num:int):
 	var river = RiverScene.instance()
 	river.translation = Vector3(0, 0.01, get_line_z(line_num))
 	parent.add_child(river)
 
 
-func make_log(var parent: Spatial, var line_num:int, var is_left:bool):
+func make_log(parent: Spatial, line_num:int, is_left:bool):
 	var thelog = LogScene.instance()
 	var x := -1.5 if is_left else +1.5
 	thelog.translation = Vector3(x, 0, get_line_z(line_num))
 	parent.add_child(thelog)
 
 
-func make_stone(var parent: Spatial, var line_num:int, var pos:int):
+func make_stone(parent: Spatial, line_num:int, pos:int):
 	var stone = StoneScene.instance()
 	var x := pos * 1.5
 	stone.translation = Vector3(x, 0, get_line_z(line_num))
 	parent.add_child(stone)
 
 
-func make_flower(var parent: Spatial, var line_num:int, var pos:int):
+func make_flower(parent: Spatial, line_num:int, pos:int):
 	var flower = FlowerScene.instance()
 	var x:float = (pos + rng.randf() - 0.75) * 1.5
 	var z:float = get_line_z(line_num) - (rng.randf() - 0.5) * LINE_LENGTH
@@ -129,11 +129,11 @@ func make_flower(var parent: Spatial, var line_num:int, var pos:int):
 	parent.add_child(flower)
 
 
-func get_line_z(var line_num:int) -> float:
+func get_line_z(line_num:int) -> float:
 	return (GROUND_LEN / 2) - LINE_LENGTH * line_num
 
 
-func check(var probability:int) -> bool:
+func check(probability:int) -> bool:
 	return rng.randi_range(0, 100) <= probability
 
 
@@ -144,7 +144,7 @@ func gen_next_line_mask() -> int:
 	return line
 
 
-func push_line(var line:int):
+func push_line(line:int):
 	line1 = line2
 	line2 = line
 

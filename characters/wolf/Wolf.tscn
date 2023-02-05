@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=2]
 
-[ext_resource path="res://objects/SimpleArea.gd" type="Script" id=1]
+[ext_resource path="res://characters/wolf/Wolf.gd" type="Script" id=1]
 [ext_resource path="res://characters/wolf/wolf_stylized.material" type="Material" id=2]
 
 [sub_resource type="ArrayMesh" id=1]
@@ -1608,7 +1608,6 @@ radius = 0.492154
 
 [node name="Wolf" type="Area"]
 script = ExtResource( 1 )
-area_type = 3
 
 [node name="Wolf_animation" type="Spatial" parent="."]
 transform = Transform( 0.010171, 0, 0, 0, 0.010171, 0, 0, 0, 0.010171, 0, 0, 0 )

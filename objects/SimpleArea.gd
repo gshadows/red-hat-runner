@@ -1,3 +1,4 @@
+class_name SimpleArea
 extends Area
 
 enum AreaType { OBSTACLE, RIVER, FLOWER, WOLF , ENDGAME}

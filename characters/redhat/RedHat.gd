@@ -12,7 +12,7 @@ const LOOSE_REASON_WOLF := "LOOSE_WOLF"
 
 const TIME_HALF_JUMP := 0.5
 const TIME_BLINK := 0.05
-const TIME_KNOCK_OUT := 1.0
+const TIME_KNOCK_OUT := 1.5
 const TIME_BUBBLE := 2.0
 const TIME_SLOWDOWN := 1.0
 const TIME_FALL := 0.5
@@ -198,12 +198,12 @@ func _change_state(new_state: int):
 		BUBBLE:
 			current_speed = 0
 			timer = TIME_BUBBLE
-
 	state = new_state
 
 
 func stname(st:int) -> String:
 	match st:
+		NONE:	return "NONE"
 		RUN:	return "RUN"
 		JUMP:	return "JUMP"
 		HIDE:	return "HIDE"
