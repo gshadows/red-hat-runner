@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://characters/wolf/Wolf.gd" type="Script" id=1]
 [ext_resource path="res://characters/wolf/wolf_stylized.material" type="Material" id=2]
+[ext_resource path="res://audio/321982__lerdavian__snarl.wav" type="AudioStream" id=3]
 
 [sub_resource type="ArrayMesh" id=1]
 resource_name = "wolf_retop004003"
@@ -1861,3 +1862,6 @@ anims/walk = SubResource( 7 )
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.985901, 0 )
 shape = SubResource( 8 )
+
+[node name="SoundRoar" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )

@@ -22,6 +22,7 @@ const ROADSIDE_OUT_X := 3.0
 
 
 onready var anim = $AnimationPlayer
+onready var sndRoar = $SoundRoar
 
 enum { NONE, WALK_IN, LOOK, WALK_OUT, RUN, JUMP }
 var state := NONE
@@ -94,6 +95,7 @@ func change_state(new_state:int):
 		WALK_OUT:
 			anim.play(ANIM_WALK)
 		LOOK:
+			sndRoar.play()
 			translation.x = 0
 			anim.play(ANIM_LOOK)
 		RUN:
@@ -102,6 +104,7 @@ func change_state(new_state:int):
 				return
 			anim.play(ANIM_RUN)
 		JUMP:
+			sndRoar.play()
 			anim.play(ANIM_JUMP)
 	state = new_state
 

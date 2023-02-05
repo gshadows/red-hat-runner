@@ -33,6 +33,8 @@ onready var cloak_dn := $RedHat/RedHatCloakDN
 onready var foot_l := $RedHat/RedHatFootL
 onready var foot_r := $RedHat/RedHatFootR
 onready var anim := $AnimationPlayer
+onready var sndFall := $SoundFall
+onready var sndSink := $SoundSink
 
 # Configuration (based on difficulty).
 var RUN_SPEED: float
@@ -207,8 +209,10 @@ func _change_state(new_state: int):
 		FALL:
 			anim.play("fall")
 			timer = TIME_FALL
+			sndFall.play()
 		SINK:
 			timer = TIME_SINK
+			sndSink.play()
 		BIRDS:
 			current_speed = 0
 			timer = TIME_KNOCK_OUT
