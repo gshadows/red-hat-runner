@@ -59,7 +59,7 @@ margin_left = -325.0
 margin_top = -276.0
 margin_right = 325.0
 margin_bottom = -4.0
-color = Color( 0.45098, 0.243137, 0, 0.2 )
+color = Color( 0.45098, 0.243137, 0, 0.690196 )
 
 [node name="Title" type="Label" parent="Win"]
 anchor_right = 1.0
@@ -78,7 +78,7 @@ margin_left = -325.0
 margin_top = -276.0
 margin_right = 325.0
 margin_bottom = -4.0
-color = Color( 0.45098, 0.243137, 0, 0.2 )
+color = Color( 0.45098, 0.243137, 0, 0.690196 )
 
 [node name="Title" type="Label" parent="Loose"]
 anchor_right = 1.0

@@ -15,7 +15,8 @@ const START_Z := 0.0
 
 const WALK_SPEED := 1.5
 const RUN_SPEED := 4.0
-const JUMP_DISTANCE_SQUARED := pow(2.8, 2) # From animation.
+const JUMP_DISTANCE := 2.8 # From animation.
+const JUMP_DISTANCE_SQUARED := pow(JUMP_DISTANCE, 2)
 const ROADSIDE_X := 3.0
 
 
@@ -67,13 +68,12 @@ func _process(delta):
 			if dist_sqr < JUMP_DISTANCE_SQUARED:
 				change_state(JUMP)
 			else:
-				var new_pos = global_translation.move_toward(target.global_translation, delta)
+				var new_pos = global_translation.move_toward(target.global_translation, RUN_SPEED * delta)
 				look_at_from_position(new_pos, target.global_translation, Vector3.UP)
-				translation.x += WALK_SPEED * walk_dir * delta
-				if (abs(translation.x) >= START_X):
-					change_state(NONE)
 		JUMP:
 			# Finish detected in on_jump_finished() animation callback.
+			# Ensure distance is constant. No chance to evade.
+			global_translation = target.global_translation + (global_translation - target.global_translation).normalized() * JUMP_DISTANCE
 			look_at(target.global_translation, Vector3.UP)
 
 

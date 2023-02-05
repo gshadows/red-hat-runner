@@ -19,7 +19,7 @@ const TIME_SLOWDOWN := 1.0
 const TIME_FALL := 0.5
 const TIME_SINK := 0.15
 
-const ROADSIDE_POS := 2.7
+const ROADSIDE_POS := 2.0
 const JUMP_SPEED := 1.0
 const BLINK_COUNT := int(1.5 / TIME_BLINK) # 1.5 seconds
 const SINK_SPEED := 5.0
@@ -49,6 +49,7 @@ var is_win := false
 var flowers := 0
 var is_jump_up := true
 var current_speed: float
+var is_debug := false
 
 var game_time := 0.0
 var timer: float
@@ -160,7 +161,8 @@ func _do_strafe(delta:float):
 		strafe = +1
 	var x = translation.x
 	x += strafe * STRAFE_SPEED * delta
-	x = clamp(x, -ROADSIDE_POS, +ROADSIDE_POS)
+	if not is_debug:
+		x = clamp(x, -ROADSIDE_POS, +ROADSIDE_POS)
 	translation.x = x
 
 

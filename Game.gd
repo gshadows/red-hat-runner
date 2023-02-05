@@ -172,7 +172,7 @@ func create_wolf(parent:Node):
 		return
 
 	# Kill old wolf.
-	is_wolf_on_road = false
+	is_wolf_watching = false
 	if wolf:
 		wolf.queue_free()
 		parent.call_deferred("remove_child", wolf)
@@ -218,9 +218,11 @@ func _input(event):
 			0:
 				$Camera.make_current()
 				$CameraDebug.visible = false
+				redhat.is_debug = false
 			1:
 				$CameraDebug.visible = true
 				$CameraDebug.make_current()
+				redhat.is_debug = true
 
 
 func open_menu():
