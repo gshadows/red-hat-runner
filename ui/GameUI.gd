@@ -47,12 +47,20 @@ func on_temperature_changed(value: float):
 
 
 func on_loose(reason:String):
+	$Wolf.visible = false
 	$Loose.visible = true
 	$Loose/Reason.text = tr(reason)
+	if is_new_high_score:
+		$Loose/Record.text = tr("HISCORE") + " " + str(high_score)
+		$Loose/Record.visible = true
 
 
 func on_win():
+	$Wolf.visible = false
 	$Win.visible = true
+	if is_new_high_score:
+		$Win/Record.text = tr("HISCORE") + " " + str(high_score)
+		$Win/Record.visible = true
 
 
 func on_wolf(is_here:bool):

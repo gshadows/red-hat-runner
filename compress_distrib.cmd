@@ -10,8 +10,10 @@ if not exist _export (
 	echo No _export found!
 )
 
+copy /Y copyrights.txt _export\
+
 echo ===== Compressing Win-64 =====
-%ARC% "_export\%GAME% x64.7z" .\_export\*x64.exe .\_export\*x64.pck
+%ARC% "_export\%GAME%.7z" .\_export\*.exe .\_export\*.pck .\_export\*.txt
 
 rem echo ===== Compressing Win-32 =====
 rem %ARC% "_export\%GAME% x86.7z" .\_export\*x86.exe .\_export\*x86.pck

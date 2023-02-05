@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/owl_great_horned.mp3-985cd43ec5f051c88ca17c70939c943f.mp3str"
+
+[deps]
+
+source_file="res://audio/owl_great_horned.mp3"
+dest_files=[ "res://.import/owl_great_horned.mp3-985cd43ec5f051c88ca17c70939c943f.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

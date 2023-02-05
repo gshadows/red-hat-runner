@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/zvuki_prirody_-_sova.mp3-b21d368bb91597f6fde9f4795953b1b9.mp3str"
+
+[deps]
+
+source_file="res://audio/zvuki_prirody_-_sova.mp3"
+dest_files=[ "res://.import/zvuki_prirody_-_sova.mp3-b21d368bb91597f6fde9f4795953b1b9.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

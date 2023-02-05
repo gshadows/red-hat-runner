@@ -31,7 +31,7 @@ func start_game():
 	unload()
 	cur_scene = Game.instance()
 	cur_scene.difficulty = Settings.SCORES_TABLE_NORMAL
-	cur_scene.startup_time_limit = 80.0
+	cur_scene.startup_time_limit = 75.0
 	cur_scene.chunks_left = 20
 	add_child(cur_scene)
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
