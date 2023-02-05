@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/389788__fmceretta__fun-music-created-with-soundtrack-pro.mp3-94fb507300292ac93270ae3eaaa4eb17.mp3str"
+
+[deps]
+
+source_file="res://audio/389788__fmceretta__fun-music-created-with-soundtrack-pro.mp3"
+dest_files=[ "res://.import/389788__fmceretta__fun-music-created-with-soundtrack-pro.mp3-94fb507300292ac93270ae3eaaa4eb17.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

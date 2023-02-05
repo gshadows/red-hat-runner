@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/389788__fmceretta__fun-music.mp3-fd34fd29f7755249a341ceb4ba002e28.mp3str"
+
+[deps]
+
+source_file="res://audio/389788__fmceretta__fun-music.mp3"
+dest_files=[ "res://.import/389788__fmceretta__fun-music.mp3-fd34fd29f7755249a341ceb4ba002e28.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

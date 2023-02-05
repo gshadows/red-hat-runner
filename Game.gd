@@ -17,6 +17,7 @@ onready var chunk2 := $chunk2
 onready var chunk3 := $chunk3
 onready var redhat := $RedHat
 onready var game_ui := $GameUI
+onready var music := $MusicPlayer
 
 onready var House := preload("res://objects/house/House.tscn")
 
@@ -193,6 +194,7 @@ func create_wolf(parent:Node):
 	# Update game state.
 	redhat.on_wolf_appear()
 	wolf.call_deferred("start_wolf", dir)
+	music.stop()
 	game_ui.on_wolf(true)
 
 
@@ -271,10 +273,12 @@ func on_wolf_attack_done():
 func on_wolf_walked_out():
 	print("Wolf leaves road")
 	is_wolf_watching = false
+	music.play()
 	game_ui.on_wolf(false)
 	redhat.on_wolf_disappear()
 
 
 func on_wolf_walked_in():
 	print("Wolf on the road!")
+	music.stop()
 	is_wolf_watching = true
