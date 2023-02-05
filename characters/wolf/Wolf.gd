@@ -2,6 +2,7 @@ class_name Wolf
 extends SimpleArea
 
 signal walked_out
+signal walked_in
 signal attack_done
 
 const ANIM_LOOK = "looking"
@@ -12,9 +13,10 @@ const ANIM_JUMP = "jump"
 const START_X := 5.0
 const START_Z := 0.0
 
-const WALK_SPEED := 2.0
-const RUN_SPEED := 6.0
+const WALK_SPEED := 1.5
+const RUN_SPEED := 4.0
 const JUMP_DISTANCE_SQUARED := pow(2.8, 2) # From animation.
+const ROADSIDE_X := 3.0
 
 
 onready var anim = $AnimationPlayer
@@ -35,17 +37,27 @@ func start_wolf(dir:int):
 	change_state(WALK_IN)
 
 
+func attack(redhat: Spatial):
+	target = redhat
+	change_state(RUN)
+
+
 func _process(delta):
 	match state:
 		NONE:
 			return
 		WALK_IN:
-			translation.x += WALK_SPEED * walk_dir * delta
-			if (abs(translation.x) < WALK_SPEED * delta):
+			var old_x = translation.x
+			translation.x = old_x + WALK_SPEED * walk_dir * delta
+			var abs_x = abs(translation.x)
+			if (abs_x < WALK_SPEED * delta):
 				change_state(LOOK)
+			elif (abs_x < ROADSIDE_X) and (abs(old_x) < ROADSIDE_X):
+				# Entered the road.
+				emit_signal("walked_in")
 		WALK_OUT:
 			translation.x += WALK_SPEED * walk_dir * delta
-			if (abs(translation.x) >= START_X):
+			if (abs(translation.x) > ROADSIDE_X):
 				emit_signal("walked_out")
 				change_state(NONE)
 		LOOK:
@@ -76,6 +88,7 @@ func change_state(new_state:int):
 		WALK_IN:
 			visible = true
 			translation = Vector3(START_X * -walk_dir, 0.0, START_Z)
+			rotation.y = walk_dir * PI / 2
 			anim.play(ANIM_WALK)
 		WALK_OUT:
 			anim.play(ANIM_WALK)

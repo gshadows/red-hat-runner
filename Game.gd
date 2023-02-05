@@ -27,6 +27,7 @@ var wolf = null
 var chunks_left: int
 var wolf_period: int
 var is_wolf_from_left: bool
+var is_wolf_watching := false
 
 var difficulty: int
 var scores_table_name: String
@@ -106,6 +107,11 @@ func _process(delta:float):
 		chunk3.translation.z += speed * delta
 		if chunk3.translation.z >= MapGenerator.GROUND_LEN:
 			swicth_chunks()
+		if is_wolf_watching and wolf:
+			# Sighted Red Hat!
+			print("Wolf sighted Red Hat!")
+			is_wolf_watching = false
+			wolf.attack(redhat)
 
 
 func swicth_chunks():
@@ -166,6 +172,7 @@ func create_wolf(parent:Node):
 		return
 
 	# Kill old wolf.
+	is_wolf_on_road = false
 	if wolf:
 		wolf.queue_free()
 		parent.call_deferred("remove_child", wolf)
@@ -181,6 +188,7 @@ func create_wolf(parent:Node):
 	wolf.call_deferred("start_wolf", dir)
 	wolf.connect("attack_done", self, "on_wolf_attack_done")
 	wolf.connect("walked_out", self, "on_wolf_walked_out")
+	wolf.connect("walked_in", self, "on_wolf_walked_in")
 
 	# Update game state.
 	redhat.on_wolf_appear()
@@ -258,4 +266,11 @@ func on_wolf_attack_done():
 
 
 func on_wolf_walked_out():
+	print("Wolf leaves road")
+	is_wolf_watching = false
 	redhat.on_wolf_disappear()
+
+
+func on_wolf_walked_in():
+	print("Wolf on the road!")
+	is_wolf_watching = true
