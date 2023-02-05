@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://objects/ground/ground.tres" type="Material" id=1]
 [ext_resource path="res://objects/ground/road.tres" type="Material" id=2]
+[ext_resource path="res://objects/ground/fence_stylized.glb" type="PackedScene" id=3]
 
 [sub_resource type="PlaneMesh" id=1]
 size = Vector2( 30, 10 )
@@ -19,3 +20,27 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0 )
 cast_shadow = 0
 mesh = SubResource( 2 )
 material/0 = ExtResource( 2 )
+
+[node name="fence_stylized" parent="." instance=ExtResource( 3 )]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -2.58236, 0.135423, 2.54747 )
+
+[node name="fence_stylized2" parent="." instance=ExtResource( 3 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -2.59405, 0.135423, 2.14173 )
+
+[node name="fence_stylized3" parent="." instance=ExtResource( 3 )]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -2.58236, 0.135423, -4.73019 )
+
+[node name="fence_stylized4" parent="." instance=ExtResource( 3 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -2.54928, 0.135423, -0.483845 )
+
+[node name="fence_stylized5" parent="." instance=ExtResource( 3 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 2.59538, 0.135423, -2.54126 )
+
+[node name="fence_stylized6" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 2.60707, 0.135423, -2.13552 )
+
+[node name="fence_stylized7" parent="." instance=ExtResource( 3 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 2.59538, 0.135423, 4.7364 )
+
+[node name="fence_stylized8" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 2.5623, 0.135423, 0.490053 )
