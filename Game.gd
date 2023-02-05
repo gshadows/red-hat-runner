@@ -193,6 +193,7 @@ func create_wolf(parent:Node):
 	# Update game state.
 	redhat.on_wolf_appear()
 	wolf.call_deferred("start_wolf", dir)
+	game_ui.on_wolf(true)
 
 
 func clear_chunk1():
@@ -270,6 +271,7 @@ func on_wolf_attack_done():
 func on_wolf_walked_out():
 	print("Wolf leaves road")
 	is_wolf_watching = false
+	game_ui.on_wolf(false)
 	redhat.on_wolf_disappear()
 
 

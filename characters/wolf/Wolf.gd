@@ -11,13 +11,14 @@ const ANIM_RUN = "run"
 const ANIM_JUMP = "jump"
 
 const START_X := 5.0
-const START_Z := 0.0
+const START_Z := 10.0
 
 const WALK_SPEED := 1.5
 const RUN_SPEED := 4.0
 const JUMP_DISTANCE := 2.8 # From animation.
 const JUMP_DISTANCE_SQUARED := pow(JUMP_DISTANCE, 2)
-const ROADSIDE_X := 3.0
+const ROADSIDE_IN_X := 1.5
+const ROADSIDE_OUT_X := 3.0
 
 
 onready var anim = $AnimationPlayer
@@ -53,12 +54,12 @@ func _process(delta):
 			var abs_x = abs(translation.x)
 			if (abs_x < WALK_SPEED * delta):
 				change_state(LOOK)
-			elif (abs_x < ROADSIDE_X) and (abs(old_x) < ROADSIDE_X):
+			elif (abs_x < ROADSIDE_IN_X) and (abs(old_x) < ROADSIDE_IN_X):
 				# Entered the road.
 				emit_signal("walked_in")
 		WALK_OUT:
 			translation.x += WALK_SPEED * walk_dir * delta
-			if (abs(translation.x) > ROADSIDE_X):
+			if (abs(translation.x) > ROADSIDE_OUT_X):
 				emit_signal("walked_out")
 				change_state(NONE)
 		LOOK:

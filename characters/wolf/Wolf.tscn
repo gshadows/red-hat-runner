@@ -1638,7 +1638,7 @@ radius = 0.492154
 script = ExtResource( 1 )
 
 [node name="Wolf_animation" type="Spatial" parent="."]
-transform = Transform( -0.010171, 0, -8.89177e-10, 0, 0.010171, 0, 8.89177e-10, 0, -0.010171, 0, 0, 0 )
+transform = Transform( 0.010171, 0, 1.77835e-09, 0, 0.010171, 0, -1.77835e-09, 0, 0.010171, 0, 0, 0 )
 
 [node name="Skeleton" type="Skeleton" parent="Wolf_animation"]
 bones/0/name = "mixamorig_Hips"

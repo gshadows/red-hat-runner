@@ -53,3 +53,7 @@ func on_loose(reason:String):
 
 func on_win():
 	$Win.visible = true
+
+
+func on_wolf(is_here:bool):
+	$Wolf.visible = is_here
