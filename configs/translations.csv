@@ -3,3 +3,8 @@ START,S T A R T,С Т А Р Т
 QUIT,Q U I T,В Ы Х О Д
 CONTINUE,C O N T I N U E,ПРОДОЛЖИТЬ
 VOLUME,Sound volume,Громкость звука
+WIN,You are Win!,Победа!
+GAMEOVER,GAME OVER,GAME OVER
+LOOSE_DEATH,You're lost all your cakes!,Вы растеряли все пирожки!
+LOOSE_TIME,The cakes got cold!,Пирожки остыли!
+LOOSE_WOLF,You were eaten by a wolf!,Вас съел волк!

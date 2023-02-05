@@ -47,6 +47,7 @@ func generate_obj(parent, scene, count:int, min_pos:float, max_pos:float):
 		var pos := Vector3(rng.randf_range(min_pos, max_pos), 0, z)
 		var obj = scene.instance()
 		obj.translation = pos
+		obj.rotate_y(rng.randf_range(0, TAU))
 		parent.add_child(obj)
 		z -= dz + rng.randf_range(-zdev, +zdev)
 		if z < zlim: break

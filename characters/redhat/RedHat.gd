@@ -1,3 +1,4 @@
+class_name RedHat
 extends Spatial
 
 signal win
@@ -46,7 +47,6 @@ var state := NONE
 var is_end_game := false
 var is_win := false
 var flowers := 0
-var loose_reason := ""
 var is_jump_up := true
 var current_speed: float
 
@@ -97,11 +97,11 @@ func _process(delta:float):
 					translation.y = 0
 			_do_strafe(delta)
 		HIDE:
-			timer -= delta
 			if timer > 0: # Slowing down
 				timer -= delta
 				if timer <= 0:
 					anim.stop()
+					current_speed = 0
 					translation.y -= HIDE_SPEED * delta # Body down (croach).
 				else:
 					current_speed = RUN_SPEED * timer / TIME_SLOWDOWN
@@ -122,16 +122,19 @@ func _process(delta:float):
 			else:
 				_change_state(BUBBLE)
 		BIRDS, BUBBLE:
-			timer -= delta
-			if timer < 0:
+			if timer > 0:
+				timer -= delta
+			else:
 				lives -= 1
 				emit_signal("lives_changed", lives)
-				start_blinking()
-				_change_state(RUN)
+				if lives < 1:
+					loose(LOOSE_REASON_DEATH)
+				else:
+					start_blinking()
+					_change_state(RUN)
 
 	game_time += delta
 	emit_signal("temperature_changed", 1.0 - game_time / TIME_LIMIT )
-	_check_loose()
 
 
 func start_blinking():
@@ -169,6 +172,8 @@ func _change_state(new_state: int):
 		# Exiting from JUMP to any other: return legs down.
 		foot_l.translation.y -= 0.25
 		foot_r.translation.y -= 0.25
+	if state == HIDE:
+		translation.y = 0
 	cloak_up.visible = false
 	cloak_dn.visible = true
 
@@ -179,6 +184,7 @@ func _change_state(new_state: int):
 			anim.play("run")
 			timer = 0
 		JUMP:
+			translation.y = 0
 			current_speed = RUN_SPEED
 			is_jump_up = true
 			anim.stop()
@@ -214,26 +220,28 @@ func stname(st:int) -> String:
 		_: return str(st)
 
 
-func _check_loose():
-	if lives < 1:
-		_loose(LOOSE_REASON_DEATH)
-	elif game_time > TIME_LIMIT:
-		_loose(LOOSE_REASON_TIME)
-
-func _loose(_reason):
+func loose(_reason):
 	print("===== LOOSE: ", _reason, " =====")
-	is_end_game = true
+	_endgame()
 	is_win = false
-	loose_reason = _reason
-	current_speed = 0
+	visible = false
 	emit_signal("loose", _reason)
 
-func _win():
-	print("===== WIN =====")
+
+func win():
+	if game_time > TIME_LIMIT:
+		loose(LOOSE_REASON_TIME)
+	else:
+		print("===== WIN =====")
+		_endgame()
+		is_win = true
+		emit_signal("win")
+
+
+func _endgame():
 	is_end_game = true
-	is_win = true
 	current_speed = 0
-	emit_signal("win")
+	anim.stop()
 
 
 func _on_RedHat_area_entered(area:Area):
@@ -257,9 +265,17 @@ func _on_RedHat_area_entered(area:Area):
 				emit_signal("flowers_changed", flowers)
 		SimpleArea.AreaType.WOLF:
 			if blink_count <= 0:
-				_loose(LOOSE_REASON_WOLF)
+				loose(LOOSE_REASON_WOLF)
 		SimpleArea.AreaType.ENDGAME:
 			if blink_count > 0:
 				blink_count = 0
 				visible = true
-			_win()
+			win()
+
+
+func on_wolf_appear():
+	pass
+
+
+func on_wolf_disappear():
+	pass

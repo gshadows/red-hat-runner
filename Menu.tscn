@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Menu.gd" type="Script" id=1]
 [ext_resource path="res://ui/MenuUI.tscn" type="PackedScene" id=2]
@@ -9,6 +9,14 @@
 [ext_resource path="res://objects/house/House.tscn" type="PackedScene" id=7]
 [ext_resource path="res://characters/wolf/Wolf.tscn" type="PackedScene" id=8]
 [ext_resource path="res://objects/log/Log.tscn" type="PackedScene" id=9]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Area
+
+# Not used in menu. Just a placeholder.
+func on_look_finished():
+	pass
+"
 
 [node name="Menu" type="Spatial"]
 script = ExtResource( 1 )
@@ -156,7 +164,7 @@ transform = Transform( 0.304282, 0.522739, -0.796339, 0, 0.83598, 0.54876, 0.952
 
 [node name="Wolf" parent="." instance=ExtResource( 8 )]
 transform = Transform( 0.710099, 0, -0.704102, 0, 1, 0, 0.704102, 0, 0.710099, 2.90137, -0.890396, -8.25357 )
-script = null
+script = SubResource( 1 )
 
 [connection signal="quit" from="MenuUI" to="." method="quit_game"]
 [connection signal="start" from="MenuUI" to="." method="start_game"]

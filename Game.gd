@@ -3,10 +3,12 @@ extends Spatial
 signal quit
 
 const USE_THREAD := false
+const END_GAME_TIMEOUT := 3.0
 
 enum GameDifficulty { NORMAL }
 
 onready var MenuUI = preload("res://ui/MenuUI.tscn")
+onready var Wolf = preload("res://characters/wolf/Wolf.tscn")
 onready var mapgen = $MapGenerator
 onready var objgen = $ObjGenerator
 
@@ -17,8 +19,13 @@ onready var redhat := $RedHat
 
 onready var House := preload("res://objects/house/House.tscn")
 
+var WOLD_PERIOD : int
+
 var menu
+var wolf = null
 var chunks_left: int
+var wolf_period: int
+var is_wolf_from_left: bool
 
 var gen_thread := Thread.new()
 var gen_thread_mutex := Mutex.new()
@@ -39,6 +46,7 @@ const RIVER_PROBABILITY_NORMAL		:= 50
 const LOG_PROBABILITY_NORMAL		:= 75
 const STONE_PROBABILITY_NORMAL		:= 75
 const FLOWER_PROBABILITY_NORMAL		:= 50
+const WOLF_PERIOD_NORMAL := 5
 
 func setup_game(difficulty: int):
 	match difficulty:
@@ -55,6 +63,7 @@ func setup_game(difficulty: int):
 			objgen.STONE_PROBABILITY		= STONE_PROBABILITY_NORMAL
 			objgen.FLOWER_PROBABILITY		= FLOWER_PROBABILITY_NORMAL
 			chunks_left = CHUNKS_TOTAL_NORMAL
+			WOLD_PERIOD = WOLF_PERIOD_NORMAL
 		_:
 			printerr("Wrong game difficulty: ", difficulty)
 			emit_signal("quit")
@@ -62,6 +71,8 @@ func setup_game(difficulty: int):
 
 func _ready():
 	setup_game(GameDifficulty.NORMAL)
+	wolf_period = WOLD_PERIOD
+	is_wolf_from_left = true # TODO random?
 	regenerate_map(chunk1)
 	regenerate_map(chunk2)
 	regenerate_map(chunk3)
@@ -97,6 +108,7 @@ func swicth_chunks():
 	else:
 		regenerate_map(chunk1)
 		regenerate_obj(chunk1, false)
+		create_wolf(chunk1)
 
 func _exit_tree():
 	if USE_THREAD:
@@ -114,6 +126,7 @@ func _gen_thread_func(_userdata):
 			break
 		regenerate_map(chunk1)
 		regenerate_obj(chunk1, false)
+		create_wolf(chunk1)
 
 
 func regenerate_map(parent:Node):
@@ -132,6 +145,32 @@ func regenerate_obj(parent:Node, flowers_only:bool):
 	else:
 		var house = House.instance()
 		parent.call_deferred("add_child", house)
+
+
+func create_wolf(parent:Node):
+	wolf_period -= 1
+	if wolf_period > 0:
+		return
+
+	# Kill old wolf.
+	if wolf:
+		wolf.queue_free()
+		parent.call_deferred("remove_child", wolf)
+
+	# Update conditions.
+	wolf_period = WOLD_PERIOD
+	var dir = +1 if is_wolf_from_left else -1
+	is_wolf_from_left = not is_wolf_from_left
+
+	# Create new wolf.
+	wolf = Wolf.instance()
+	parent.call_deferred("add_child", wolf)
+	wolf.call_deferred("start_wolf", dir)
+	wolf.connect("attack_done", self, "on_wolf_attack_done")
+	wolf.connect("walked_out", self, "on_wolf_walked_out")
+
+	# Update game state.
+	redhat.on_wolf_appear()
 
 
 func clear_chunk1():
@@ -179,8 +218,20 @@ func quit_game():
 
 
 func _on_RedHat_loose(_reason):
+	$GameUI.on_loose(_reason)
+	yield(get_tree().create_timer(END_GAME_TIMEOUT), "timeout")
 	quit_game()
 
 
 func _on_RedHat_win():
+	$GameUI.on_win()
+	yield(get_tree().create_timer(END_GAME_TIMEOUT), "timeout")
 	quit_game()
+
+
+func on_wolf_attack_done():
+	redhat.loose(RedHat.LOOSE_REASON_WOLF)
+
+
+func on_wolf_walked_out():
+	redhat.on_wolf_disappear()

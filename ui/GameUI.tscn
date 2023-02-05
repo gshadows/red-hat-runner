@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://sprites/icon.png" type="Texture" id=1]
 [ext_resource path="res://ui/GameUI.gd" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://sprites/thermometer.png" type="Texture" id=4]
 [ext_resource path="res://sprites/thermometer_scale.png" type="Texture" id=5]
 [ext_resource path="res://sprites/flower.png" type="Texture" id=6]
+[ext_resource path="res://ui/balkara_font/balkara_64.tres" type="DynamicFont" id=7]
 
 [node name="GameUI" type="Control"]
 anchor_right = 1.0
@@ -47,3 +48,52 @@ texture_over = ExtResource( 4 )
 texture_progress = ExtResource( 5 )
 texture_progress_offset = Vector2( 32, 26 )
 fill_mode = 3
+
+[node name="Win" type="ColorRect" parent="."]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -325.0
+margin_top = -276.0
+margin_right = 325.0
+margin_bottom = -4.0
+color = Color( 0.45098, 0.243137, 0, 0.2 )
+
+[node name="Title" type="Label" parent="Win"]
+anchor_right = 1.0
+margin_bottom = 77.0
+custom_fonts/font = ExtResource( 7 )
+text = "WIN"
+align = 1
+
+[node name="Loose" type="ColorRect" parent="."]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -325.0
+margin_top = -276.0
+margin_right = 325.0
+margin_bottom = -4.0
+color = Color( 0.45098, 0.243137, 0, 0.2 )
+
+[node name="Title" type="Label" parent="Loose"]
+anchor_right = 1.0
+margin_bottom = 77.0
+custom_fonts/font = ExtResource( 7 )
+text = "GAMEOVER"
+align = 1
+
+[node name="Reason" type="Label" parent="Loose"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -196.0
+custom_fonts/font = ExtResource( 3 )
+text = "taken by ufo"
+align = 1
+valign = 1
+autowrap = true

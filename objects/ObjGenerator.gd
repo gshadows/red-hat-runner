@@ -6,6 +6,7 @@ const LINE_LENGTH := 1.0 # Should be same as player jump distance.
 const NUM_LINES := int(GROUND_LEN / LINE_LENGTH)
 const OBJ_Y := 0.25
 const ROWS_DISTANCE_X := -1.5
+const LOG_ROTATION_LIMIT := PI/12 # 15°
 
 onready var RiverScene = preload("res://objects/river/River.tscn")
 onready var LogScene = preload("res://objects/log/Log.tscn")
@@ -16,7 +17,7 @@ onready var FlowerScene = preload("res://objects/flower/Flower.tscn")
 var start_seed: int = 0
 var rng = RandomNumberGenerator.new()
 
-# Generation options.
+# Generation options. Typically overridden by Game class based on difficulty.
 var FILLED_BLOCK_LENGTH := 10
 var EMPTY_BLOCK_LENGTH := 5
 var EMPTY_LINE_PROBABILITY := 30
@@ -111,6 +112,7 @@ func make_log(parent: Spatial, line_num:int, is_left:bool):
 	var thelog = LogScene.instance()
 	var x := -1.5 if is_left else +1.5
 	thelog.translation = Vector3(x, 0, get_line_z(line_num))
+	thelog.rotate_y(rng.randf_range(-LOG_ROTATION_LIMIT, +LOG_ROTATION_LIMIT))
 	parent.add_child(thelog)
 
 
@@ -118,6 +120,7 @@ func make_stone(parent: Spatial, line_num:int, pos:int):
 	var stone = StoneScene.instance()
 	var x := pos * 1.5
 	stone.translation = Vector3(x, 0, get_line_z(line_num))
+	stone.rotate_y(rng.randf_range(0, TAU))
 	parent.add_child(stone)
 
 
@@ -126,6 +129,7 @@ func make_flower(parent: Spatial, line_num:int, pos:int):
 	var x:float = (pos + rng.randf() - 0.75) * 1.5
 	var z:float = get_line_z(line_num) - (rng.randf() - 0.5) * LINE_LENGTH
 	flower.translation = Vector3(x, 0, z)
+	flower.rotate_y(rng.randf_range(0, TAU))
 	parent.add_child(flower)
 
 

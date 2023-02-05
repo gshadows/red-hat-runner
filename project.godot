@@ -19,15 +19,27 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://objects/ObjGenerator.gd"
 }, {
+"base": "Spatial",
+"class": "RedHat",
+"language": "GDScript",
+"path": "res://characters/redhat/RedHat.gd"
+}, {
 "base": "Area",
 "class": "SimpleArea",
 "language": "GDScript",
 "path": "res://objects/SimpleArea.gd"
+}, {
+"base": "SimpleArea",
+"class": "Wolf",
+"language": "GDScript",
+"path": "res://characters/wolf/Wolf.gd"
 } ]
 _global_script_class_icons={
 "MapGenerator": "",
 "ObjGenerator": "",
-"SimpleArea": ""
+"RedHat": "",
+"SimpleArea": "",
+"Wolf": ""
 }
 
 [application]
