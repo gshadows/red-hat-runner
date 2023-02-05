@@ -9,11 +9,11 @@ const ANIM_WALK = "walk"
 const ANIM_RUN = "run"
 const ANIM_JUMP = "jump"
 
-const START_X := -5.0
-const START_Z := -9.0
+const START_X := 5.0
+const START_Z := 0.0
 
-const WALK_SPEED := 1.0
-const RUN_SPEED := 3.0
+const WALK_SPEED := 2.0
+const RUN_SPEED := 6.0
 const JUMP_DISTANCE_SQUARED := pow(2.8, 2) # From animation.
 
 

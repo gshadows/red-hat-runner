@@ -167,7 +167,6 @@ func _do_strafe(delta:float):
 func _change_state(new_state: int):
 	if new_state == state:
 		return
-	print("STATE: ", stname(state), " -> ", stname(new_state))
 	if state == JUMP:
 		# Exiting from JUMP to any other: return legs down.
 		foot_l.translation.y -= 0.25
@@ -180,9 +179,19 @@ func _change_state(new_state: int):
 	match new_state:
 		RUN:
 			translation.y = 0
-			current_speed = RUN_SPEED
 			anim.play("run")
-			timer = 0
+			current_speed = RUN_SPEED
+			if Input.is_action_pressed("Hide"):
+				anim.advance(0)
+				anim.stop()
+				if state != JUMP:
+					timer = 0.00001
+					new_state = HIDE
+				else:
+					_change_state(HIDE) # If was pressed while jumping or knock-out.
+					return
+			else:
+				timer = 0
 		JUMP:
 			translation.y = 0
 			current_speed = RUN_SPEED
@@ -204,6 +213,7 @@ func _change_state(new_state: int):
 		BUBBLE:
 			current_speed = 0
 			timer = TIME_BUBBLE
+	print("STATE: ", stname(state), " -> ", stname(new_state))
 	state = new_state
 
 

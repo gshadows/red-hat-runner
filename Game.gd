@@ -205,7 +205,7 @@ func _input(event):
 		open_menu()
 		return
 	if event.is_action_pressed("debug"):
-		debug_mode = fmod(debug_mode + 1, 2)
+		debug_mode = (debug_mode + 1) % 2
 		match debug_mode:
 			0:
 				$Camera.make_current()

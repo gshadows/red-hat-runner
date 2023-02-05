@@ -7,6 +7,9 @@ var cur_scene
 
 
 func _ready():
+	if OS.is_debug_build() or get_tree().is_editor_hint():
+		OS.current_screen = OS.get_screen_count() - 1
+		OS.window_maximized = true
 	randomize()
 	open_menu()
 
