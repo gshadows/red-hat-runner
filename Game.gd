@@ -36,6 +36,8 @@ var gen_thread_mutex := Mutex.new()
 var gen_thread_semaphore := Semaphore.new()
 var gen_thread_quit := false
 
+var debug_mode := 0
+
 
 # Game settings: NORMAL
 const RUN_SPEED_NORMAL		:= 5.0
@@ -52,10 +54,10 @@ const STONE_PROBABILITY_NORMAL		:= 75
 const FLOWER_PROBABILITY_NORMAL		:= 50
 const WOLF_PERIOD_NORMAL := 5
 
-func setup_game(difficulty: int):
-	match difficulty:
+func setup_game(new_difficulty: int):
+	match new_difficulty:
 		GameDifficulty.NORMAL:
-			self.difficulty = difficulty
+			difficulty = new_difficulty
 			scores_table_name = Settings.SCORES_TABLE_NORMAL
 			redhat.RUN_SPEED	= RUN_SPEED_NORMAL
 			redhat.STRAFE_SPEED	= STRAFE_SPEED_NORMAL
@@ -182,6 +184,7 @@ func create_wolf(parent:Node):
 
 	# Update game state.
 	redhat.on_wolf_appear()
+	wolf.call_deferred("start_wolf", dir)
 
 
 func clear_chunk1():
@@ -201,6 +204,15 @@ func _input(event):
 		get_tree().set_input_as_handled()
 		open_menu()
 		return
+	if event.is_action_pressed("debug"):
+		debug_mode = fmod(debug_mode + 1, 2)
+		match debug_mode:
+			0:
+				$Camera.make_current()
+				$CameraDebug.visible = false
+			1:
+				$CameraDebug.visible = true
+				$CameraDebug.make_current()
 
 
 func open_menu():

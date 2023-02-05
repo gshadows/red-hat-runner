@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Game.gd" type="Script" id=1]
 [ext_resource path="res://objects/ground/ground.tscn" type="PackedScene" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://objects/MapGenerator.tscn" type="PackedScene" id=4]
 [ext_resource path="res://characters/redhat/RedHat.tscn" type="PackedScene" id=5]
 [ext_resource path="res://ui/GameUI.tscn" type="PackedScene" id=6]
+[ext_resource path="res://configs/default_env.tres" type="Environment" id=7]
 [ext_resource path="res://objects/ObjGenerator.gd" type="Script" id=8]
 
 [node name="Game" type="Spatial"]
@@ -15,6 +16,12 @@ script = ExtResource( 1 )
 transform = Transform( 1, 0, 0, 0, 0.723558, 0.690264, 0, -0.690264, 0.723558, 0, 3.12529, 5.33152 )
 environment = ExtResource( 3 )
 current = true
+size = 0.1
+
+[node name="CameraDebug" type="Camera" parent="."]
+transform = Transform( 1.31134e-07, 0.999723, -0.0235424, 0, 0.0235424, 0.999723, 1, -1.31098e-07, 3.08721e-09, 0, 16.129, -10 )
+visible = false
+environment = ExtResource( 7 )
 size = 0.1
 
 [node name="MapGenerator" parent="." instance=ExtResource( 4 )]
