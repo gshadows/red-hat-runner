@@ -11,7 +11,7 @@ var sound_volume := 1.0
 var full_screen := false
 
 var debug := OS.is_debug_build()
-var lang := "ru"
+var lang := "en"
 
 var scores_normal := _empty_scores()
 
